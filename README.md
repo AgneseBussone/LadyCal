@@ -1,6 +1,6 @@
-PersonalCalendar
+LadyCal
 ====================
 
 Android App.
 
-Webpage: https://agnesebussone.github.io/PersonalCalendar/
+Webpage: https://agnesebussone.github.io/LadyCal/
