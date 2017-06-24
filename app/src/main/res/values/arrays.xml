@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_startWeekDay_entries">
+        <item>Sunday</item>
+        <item>Monday</item>
+    </string-array>
+    <string-array name="pref_startWeekDay_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_swipe_entries">
+        <item>None</item>
+        <item>Left/Right</item>
+        <item>Up/Down</item>
+    </string-array>
+    <!--Valued defined in ExtendedCalendarView-->
+    <string-array name="pref_swipe_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_history_entries">
+        <item>6 months</item>
+        <item>1 year</item>
+    </string-array>
+    <string-array name="pref_history_values">
+        <item>6</item>
+        <item>12</item>
+    </string-array>
+
+</resources>

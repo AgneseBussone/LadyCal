@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">LadyCal</string>
+
+    <!-- Menu item -->
+    <string name="add_period">Periods list</string>
+    <string name="settings">Settings</string>
+    <string name="statistics">Statistics</string>
+    <string name="tutorial">Show tutorial again</string>
+    <string name="feedback">Feedback</string>
+    <string name="rate">Rate app</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_add_period_title">Start period?</string>
+    <string name="dialog_delete_period">Delete period?</string>
+    <string name="dialog_end_period">End period?</string>
+    <string name="add_med">Medicine taken</string>
+
+
+    <!-- History -->
+    <string name="startPeriod">Start Date</string>
+    <string name="endPeriod">End Date</string>
+    <string name="historyTitle">Your periods</string>
+    <string name="deleteAll">Delete All Periods</string>
+    <string name="dialog_delete_all_period">Delete all data?</string>
+    <string name="dialog_edit_medicine">Go to calendar to change medicine data?</string>
+
+    <!-- Settings -->
+    <string name="action_settings">Settings</string>
+    <string name="pref_startWeekDay">First day of the week</string>
+    <string name="pref_startWeekDay_default">1</string>
+    <string name="pref_settingsTitle">Settings</string>
+    <string name="pref_swipe">Swipe direction</string>
+    <string name="pref_swipe_default">0</string>
+    <string name="pref_periodLength_title">Period Length</string>
+    <string name="pref_periodLength_checkbox">Use fixed period length</string>
+    <string name="pref_days_value">Days</string>
+    <string name="pref_periodLength_default">6</string>
+    <string name="pref_cycleLength_title">Cycle Length</string>
+    <string name="pref_cycleLength_checkbox">Use fixed cycle length</string>
+    <string name="pref_cycleLength_default">28</string>
+    <string name="pref_length_summary">If unchecked use average</string>
+    <string name="pref_general">General</string>
+    <string name="pref_history_title">Delete data older than</string>
+    <string name="pref_history_default">12</string>
+    <string name="resetAll">Reset preferences</string>
+    <string name="dialog_reset_pref">Reset all preferences?</string>
+    <string name="backup">Backup</string>
+    <string name="open_sys_settings">Open system settings</string>
+    <string name="backup_message">This app relies on the Android Auto Backup for Apps. Please check if is enabled on your system settings.</string>
+    <string name="pref_reminders_title">Reminders</string>
+    <string name="pref_friendly_reminder">Friendly reminder</string>
+    <string name="pref_friendly_reminder_sub">Remind me the upcoming period 3 days before</string>
+    <string name="pref_period_reminder">Period reminder</string>
+    <string name="pref_period_reminder_sub">Remind me when the period starts or ends</string>
+
+    <!-- Preferences keys -->
+    <string name="KEY_DAY">key_pref_startWeekDay</string>
+    <string name="KEY_SWIPE">key_pref_swipeDirection</string>
+    <string name="KEY_PERIOD">key_pref_useFixedPeriod</string>
+    <string name="KEY_PERIOD_VALUE">key_pref_fixedPeriodValue</string>
+    <string name="KEY_CYCLE">key_pref_useFixedCycle</string>
+    <string name="KEY_CYCLE_VALUE">key_pref_fixedCycleValue</string>
+    <string name="KEY_HISTORY">key_pref_history</string>
+    <string name="KEY_BACKUP">key_pref_backup</string>
+    <string name="KEY_FRIENDLY_REM">key_pref_friendly_reminder</string>
+    <string name="KEY_PERIOD_REM">key_pref_period_reminder</string>
+    <string name="KEY_FRIENDLY_REM_DATE">key_friendly_reminder_date</string>
+    <string name="KEY_PERIOD_REM_DATE">key_period_reminder_date</string>
+    <string name="KEY_ASK_FOR_RATE">askForRate</string>
+    <string name="KEY_FIRST_USE">firstUse</string>
+
+    <!-- Statistics -->
+    <string name="fit_to_screen">Fit to screen</string>
+    <string name="period_length_tab_title">Period length</string>
+    <string name="cycle_length_tab_title">Cycle length</string>
+    <string name="pain_days_tab_title">Painful days</string>
+    <string name="pain_periods_tab_title">Painful periods</string>
+    <string name="med_per_period_chart_descr">Total of medicine taken per period</string>
+    <string name="med_per_day_chart_descr">Based on the total of medicine taken per day</string>
+    <string name="days_descr">Days</string>
+    <string name="no_data">No data available</string>
+    <plurals name="med_per_period" >
+        <item quantity="one">Day %1$d: %2$d pill</item>
+        <item quantity="zero">Day %1$d: %2$d pill</item>
+        <item quantity="other">Day %1$d: %2$d pills</item>
+    </plurals>
+    <plurals name="average">
+        <item quantity="one">Your average: %1$d day</item>
+        <item quantity="other">Your average: %1$d days</item>
+    </plurals>
+
+    <!-- Messages in the main view -->
+    <plurals name="day_until_next_period">
+        <item quantity="one">%1$d day until next period</item>
+        <item quantity="other">%1$d days until next period</item>
+    </plurals>
+    <plurals name="day_late">
+        <item quantity="one">%1$d day late</item>
+        <item quantity="other">%1$d days late</item>
+    </plurals>
+
+
+</resources>

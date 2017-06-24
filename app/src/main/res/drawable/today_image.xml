@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:shape="oval">
+            <size android:height="@dimen/buttons_dimension" android:width="@dimen/buttons_dimension"/>
+            <solid android:color="@color/colorAccent"/>
+
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/ic_refresh"
+        android:height="30dp"
+        android:width="30dp"
+        android:gravity="center"/>
+</layer-list>

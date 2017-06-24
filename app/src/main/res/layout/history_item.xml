@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_marginStart="5dp"
+              android:layout_marginTop="5dp"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/period"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="11dp"
+        android:layout_width="wrap_content">
+
+        <TextView
+            android:text="Length: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:text="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/days"
+            android:layout_weight="1"
+            android:textColor="@color/colorAccent"/>
+
+    </LinearLayout>
+
+    <Button
+        android:drawableTop="@drawable/ic_delete"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/deleteBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@android:color/background_light"/>
+
+    <Button
+        android:layout_height="50dp"
+        android:drawableTop="@drawable/ic_med"
+        android:id="@+id/editMedBtn"
+        android:layout_width="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/deleteBtn"
+        android:backgroundTint="@android:color/background_light"/>
+
+    <Button
+        android:layout_height="50dp"
+        android:drawableTop="@drawable/ic_edit"
+        android:id="@+id/editBtn"
+        android:layout_width="50dp"
+        android:backgroundTint="@android:color/background_light"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/editMedBtn"/>
+
+</RelativeLayout>

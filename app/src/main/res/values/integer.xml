@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="askForRate_max_value">15</integer>
+    <integer name="askForRate_null">-1</integer>
+
+</resources>

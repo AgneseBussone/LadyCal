@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_general">
+    <ListPreference android:key="@string/KEY_DAY"
+                    android:title="@string/pref_startWeekDay"
+                    android:entries="@array/pref_startWeekDay_entries"
+                    android:entryValues="@array/pref_startWeekDay_values"
+                    android:defaultValue="@string/pref_startWeekDay_default"/>
+
+    <ListPreference android:key="@string/KEY_SWIPE"
+                    android:title="@string/pref_swipe"
+                    android:entries="@array/pref_swipe_entries"
+                    android:entryValues="@array/pref_swipe_values"
+                    android:defaultValue="@string/pref_swipe_default"/>
+
+    <ListPreference android:key="@string/KEY_HISTORY"
+                    android:title="@string/pref_history_title"
+                    android:entries="@array/pref_history_entries"
+                    android:entryValues="@array/pref_history_values"
+                    android:defaultValue="@string/pref_history_default"/>
+    </PreferenceCategory>
+    <Preference
+        android:title="divider"
+        android:selectable="false"
+        android:layout="@layout/preference_divider"/>
+
+    <PreferenceCategory
+        android:title="@string/pref_periodLength_title">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:title="@string/pref_periodLength_checkbox"
+            android:key="@string/KEY_PERIOD"
+            android:summary="@string/pref_length_summary"/>
+        <EditTextPreference
+            android:defaultValue="@string/pref_periodLength_default"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_days_value"
+            android:key="@string/KEY_PERIOD_VALUE"
+            android:dependency="@string/KEY_PERIOD"
+            android:inputType="number"/>
+    </PreferenceCategory>
+    <Preference
+        android:title="divider"
+        android:selectable="false"
+        android:layout="@layout/preference_divider"/>
+    <PreferenceCategory
+        android:title="@string/pref_cycleLength_title">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:title="@string/pref_cycleLength_checkbox"
+            android:key="@string/KEY_CYCLE"
+            android:summary="@string/pref_length_summary"/>
+        <EditTextPreference
+            android:defaultValue="@string/pref_cycleLength_default"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_days_value"
+            android:key="@string/KEY_CYCLE_VALUE"
+            android:dependency="@string/KEY_CYCLE"
+            android:inputType="number"/>
+    </PreferenceCategory>
+    <Preference
+        android:title="divider"
+        android:selectable="false"
+        android:layout="@layout/preference_divider"/>
+    <PreferenceCategory
+        android:title="@string/pref_reminders_title">
+        <CheckBoxPreference
+            android:key="@string/KEY_FRIENDLY_REM"
+            android:title="@string/pref_friendly_reminder"
+            android:summary="@string/pref_friendly_reminder_sub"
+            android:defaultValue="false"/>
+        <CheckBoxPreference
+            android:key="@string/KEY_PERIOD_REM"
+            android:title="@string/pref_period_reminder"
+            android:summary="@string/pref_period_reminder_sub"/>
+
+    </PreferenceCategory>
+
+    <Preference
+        android:title="divider"
+        android:selectable="false"
+        android:layout="@layout/preference_divider"/>
+    <Preference
+        android:title="@string/backup"
+        android:selectable="true"
+        android:key="@string/KEY_BACKUP"/>
+
+</PreferenceScreen>
