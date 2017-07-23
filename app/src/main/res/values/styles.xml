@@ -25,6 +25,14 @@
         <item name="android:navigationBarColor">@color/colorPrimaryDark_greenTheme</item>
     </style>
 
+    <style name="PurpleTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary_purpleTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_purpleTheme</item>
+        <item name="colorAccent">@color/colorAccent_purpleTheme</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark_purpleTheme</item>
+    </style>
+
     <style name="PrefStyle" parent="AppTheme">
         <!-- Get rid of the list divider only in the preference activity-->
         <item name="android:listDivider">@null</item>
