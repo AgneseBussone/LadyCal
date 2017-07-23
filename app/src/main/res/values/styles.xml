@@ -8,12 +8,6 @@
         <item name="colorAccent">@color/colorAccent_baseTheme</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark_baseTheme</item>
     </style>
-    <style name="SecondAppTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimary_secondTheme</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark_secondTheme</item>
-        <item name="colorAccent">@color/colorAccent_secondTheme</item>
-        <item name="android:navigationBarColor">@color/colorPrimaryDark_secondTheme</item>
-    </style>
     
     <style name="PrefStyle" parent="AppTheme">
         <!-- Get rid of the list divider only in the preference activity-->
