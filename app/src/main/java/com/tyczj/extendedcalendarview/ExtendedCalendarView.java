@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beacat.calendar.ladycal.R;
+import com.beacat.calendar.ladycal.UtilityClass;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -107,7 +108,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             monthTV.setTextAppearance(context, android.R.style.TextAppearance_DeviceDefault_Large);
             monthTV.setText(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " + calendar.get(Calendar.YEAR));
             monthTV.setTextSize(25);
-            monthTV.setTextColor(getResources().getColor(R.color.colorPrimaryDark_baseTheme));//TODO: change
+            monthTV.setTextColor(UtilityClass.getThemeColor(context, R.attr.colorPrimaryDark));
 
             base.addView(monthTV);
 

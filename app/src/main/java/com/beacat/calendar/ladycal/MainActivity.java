@@ -28,8 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-//TODO: readPreferences, setTheme, setContentView e poi fare una funzione che in base al tema setta i colori
-//TODO: togliere tutte le definizioni di colore dall'xml e ficcarle nella suddetta setColors
 public class MainActivity extends AppCompatActivity {
 
     // constant required to retrieve data in case the user wants to insert meds data from history activity
