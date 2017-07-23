@@ -86,7 +86,7 @@ public class Reminder extends BroadcastReceiver {
     protected static Notification getNotification(int type, Context context) {
         Notification.Builder builder = new Notification.Builder(context);
         builder.setSmallIcon(R.drawable.ic_notification2);
-        builder.setColor(context.getResources().getColor(R.color.colorPrimary));
+        builder.setColor(context.getResources().getColor(UtilityClass.getThemeColor(context, R.attr.colorPrimary)));
         builder.setAutoCancel(true);
         Intent i = new Intent(context, SplashActivity.class); // intent for opening the app when tap
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

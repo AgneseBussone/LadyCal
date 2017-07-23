@@ -17,6 +17,10 @@ public class BackupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        if(i != null){
+            setTheme(i.getIntExtra("themeId", R.style.AppTheme));
+        }
         setContentView(R.layout.backup_layout);
 
         // Change the title in the action bar

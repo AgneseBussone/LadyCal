@@ -24,6 +24,10 @@ public class RateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        if(i != null){
+            setTheme(i.getIntExtra("themeId", R.style.AppTheme));
+        }
         setContentView(R.layout.rate_layout_base);
 
         // hide the actionbar

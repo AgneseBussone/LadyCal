@@ -23,14 +23,14 @@
         android:clickable="true"
         android:onClick="resetDateToday"
         app:fabSize="mini"
-        app:rippleColor="@color/colorPrimary"
+        app:rippleColor="?colorPrimary"
         android:src="@drawable/ic_refresh"/>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:rippleColor="@color/colorPrimary"
+        app:rippleColor="?colorPrimary"
         android:src="@drawable/ic_start"
         android:id="@+id/startBtn"
         app:fabSize="mini"
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:rippleColor="@color/colorPrimary"
+        app:rippleColor="?colorPrimary"
         android:src="@drawable/ic_med"
         android:id="@+id/addMedBtn"
         app:fabSize="mini"

@@ -20,14 +20,24 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 public class SettingsActivity extends AppCompatActivity {
 
     private String fragment_tag = "setting_fragment";
+    private int themeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        if(i != null){
+            themeId = i.getIntExtra("themeId", R.style.AppTheme);
+            setTheme(themeId);
+        }
 
         // Display the fragment as the main content.
+        Bundle bundle = new Bundle();
+        bundle.putInt("themeId", themeId);
+        SettingsFragment settingsFragment = new SettingsFragment();
+        settingsFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new SettingsFragment(), fragment_tag)
+                .replace(android.R.id.content, settingsFragment, fragment_tag)
                 .commit();
 
         // Change the title in the action bar
@@ -94,13 +104,18 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     /**
-     * Inner class that implements the fragment and the listener for changes
+     * Inner class that implements the fragment and sets the listeners for changes
      */
     public static class SettingsFragment extends PreferenceFragment{
+
+        private int themeId;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            Bundle bundle = getArguments();
+            themeId = bundle.getInt("themeId", R.style.AppTheme);
 
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.preferences);
@@ -202,6 +217,7 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent i = new Intent(getActivity().getApplicationContext(), BackupActivity.class);
+                    i.putExtra("themeId", themeId);
                     startActivity(i);
                     return false;
                 }

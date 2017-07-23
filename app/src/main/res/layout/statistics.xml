@@ -44,7 +44,7 @@
                         android:fontFamily="casual"
                         android:paddingEnd="5dp"
                         android:text="Tap on point for details"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="?colorPrimaryDark" />
 
                     <FrameLayout
                         android:layout_width="match_parent"

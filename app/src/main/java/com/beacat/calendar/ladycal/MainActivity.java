@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+//TODO: readPreferences, setTheme, setContentView e poi fare una funzione che in base al tema setta i colori
+//TODO: togliere tutte le definizioni di colore dall'xml e ficcarle nella suddetta setColors
 public class MainActivity extends AppCompatActivity {
 
     // constant required to retrieve data in case the user wants to insert meds data from history activity
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar bar;
     private SharedPreferences sharedPref;
     PeriodDatabase db;
+    private int themeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Read the preferences before creating the view
         initPreferences();
+
+        // set the theme
+        setTheme(themeId);
 
         // Create the view and all the objects in it
         setContentView(R.layout.activity_main);
@@ -100,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (which){
                             case AlertDialog.BUTTON_POSITIVE:
                                 // open the rate activity
-                                Intent i = new Intent(getApplicationContext(), RateActivity.class);
+                                Intent i = new Intent(MainActivity.this, RateActivity.class);
                                 startActivity(i);
                                 // fallthrough
                             case AlertDialog.BUTTON_NEGATIVE:
@@ -183,6 +189,9 @@ public class MainActivity extends AppCompatActivity {
         calculatePeriodAndCycleLength(sharedPref);
 
         checkReminders(sharedPref);
+
+        // theme
+        themeId = Integer.parseInt(sharedPref.getString(getString(R.string.KEY_THEME), String.valueOf(R.style.AppTheme)));
     }
 
     @Override
@@ -201,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                     // remove the listener or it will be called every time the view is drawn
                     calendar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     // start the async task
-                    SetMessagesTask task = new SetMessagesTask(getApplicationContext(), bar, calendar.getToday());
+                    SetMessagesTask task = new SetMessagesTask(MainActivity.this, bar, calendar.getToday());
                     task.execute();
                 }
             });
@@ -224,28 +233,31 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.add_history: {
                 Intent intent = new Intent(this, HistoryActivity.class);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                intent.putExtra("themeId", themeId);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivityForResult(intent, CHANGE_MEDS_CODE, bundle);
                 return true;
             }
             case R.id.settings: {
                 Intent i = new Intent(this, SettingsActivity.class);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                i.putExtra("themeId", themeId);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
                 return true;
             }
             case R.id.statistics: {
                 Intent i = new Intent(this, StatisticsActivity.class);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                i.putExtra("themeId", themeId);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
                 return true;
             }
             case R.id.tutorial: {
                 Intent i = new Intent(this, TutorialActivity.class);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
                 return true;
@@ -273,7 +285,8 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.rate: {
                 Intent i = new Intent(this, RateActivity.class);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                i.putExtra("themeId", themeId);
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
                 return true;
@@ -326,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
                 // remove the listener or it will be called every time the view is drawn
                 calendar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 // start the async task
-                SetMessagesTask task = new SetMessagesTask(getApplicationContext(), bar, calendar.getToday());
+                SetMessagesTask task = new SetMessagesTask(MainActivity.this, bar, calendar.getToday());
                 task.execute();
             }
         });
@@ -343,13 +356,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // check if it's not in the future
                 if(day.getDayUTC() > calendar.getToday().getDayUTC()){
-                    Toast.makeText(getApplicationContext(), "Operations in the future not allowed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
                     // get rid of the selection icon in the view
                     calendar.refreshCalendar();
                     dialog.dismiss();
                     return;
                 }
-                new EndPeriodTask(getApplicationContext(), calendar).execute(day);
+                new EndPeriodTask(MainActivity.this, calendar).execute(day);
                 dialog.dismiss();
             }
         });
@@ -377,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // check if it's not in the future
                         if(day.getDayUTC() > cal.getTimeInMillis()){
-                            Toast.makeText(getApplicationContext(), "Operations in the future not allowed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
                             // get rid of the selection icon in the view
                             calendar.refreshCalendar();
                             dialog.dismiss();
@@ -391,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
                         cal.add(Calendar.DATE, (db.getPeriodLength() - 1));
                         endDay = new Day(null, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-                        new AddPeriodTask(getApplicationContext(), calendar).execute(day, endDay);
+                        new AddPeriodTask(MainActivity.this, calendar).execute(day, endDay);
 
                         dialog.dismiss();
 
@@ -399,10 +412,10 @@ public class MainActivity extends AppCompatActivity {
                         if(sharedPref.getBoolean(getString(R.string.KEY_PERIOD_REM), false)){
                             // cal is set to the end of the period
                             if(Calendar.getInstance().getTimeInMillis() < cal.getTimeInMillis()){
-                                Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_END, getApplicationContext()),
+                                Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_END, MainActivity.this),
                                         cal.getTimeInMillis(),
                                         Reminder.NOTIFICATION_CODE_END,
-                                        getApplicationContext());
+                                        MainActivity.this);
                                 if(BuildConfig.DEBUG) {
 //                                    Log.d(TAG, "scheduled end reminder");
                                 }
@@ -459,7 +472,7 @@ public class MainActivity extends AppCompatActivity {
                     day = selectedDay;
                     // check if it's not in the future
                     if(day.getDayUTC() > cal.getTimeInMillis()){
-                        Toast.makeText(getApplicationContext(), "Operations in the future not allowed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
                         // get rid of the selection icon in the view
                         calendar.refreshCalendar();
                         dialog.dismiss();
@@ -469,10 +482,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(day.isPeriod()) {
                     day.setMeds(n);
-                    new AddMedTask(getApplicationContext(), calendar).execute(day);
+                    new AddMedTask(MainActivity.this, calendar).execute(day);
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "You cannot set medicine for non period day", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "You cannot set medicine for non period day", Toast.LENGTH_LONG).show();
                     // get rid of the selection icon in the view
                     calendar.refreshCalendar();
                 }
@@ -515,10 +528,10 @@ public class MainActivity extends AppCompatActivity {
                 c.add(Calendar.DATE, (db.getCycleLength() - 3)); // friendly reminder date
                 if (now <= c.getTimeInMillis() && friendlyRem) {
                     long date = c.getTimeInMillis();
-                    Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, getApplicationContext()),
+                    Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivity.this),
                             date,
                             Reminder.NOTIFICATION_CODE_FRIENDLY,
-                            getApplicationContext());
+                            MainActivity.this);
                     saveReminderDate(Reminder.NOTIFICATION_CODE_FRIENDLY, date);
                     if(BuildConfig.DEBUG) {
 //                        Log.d(TAG, "scheduled friendly reminder");
@@ -528,10 +541,10 @@ public class MainActivity extends AppCompatActivity {
                     c.add(Calendar.DATE, 3); // start period reminder date
                     if(now <= c.getTimeInMillis()) {
                         long date = c.getTimeInMillis();
-                        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_START, getApplicationContext()),
+                        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_START, MainActivity.this),
                                 date,
                                 Reminder.NOTIFICATION_CODE_START,
-                                getApplicationContext());
+                                MainActivity.this);
                         saveReminderDate(Reminder.NOTIFICATION_CODE_START, date);
                         if(BuildConfig.DEBUG) {
 //                            Log.d(TAG, "scheduled start reminder");

@@ -2,6 +2,7 @@ package com.beacat.calendar.ladycal;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -61,10 +62,14 @@ public class StatisticsActivity extends AppCompatActivity {
     private List<Med> allMedsList = null;
     private List<Entry> entries = new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        if(i != null){
+            setTheme(i.getIntExtra("themeId", R.style.AppTheme));
+        }
+
         db = PeriodDatabase.getInstance(getApplicationContext());
         setContentView(R.layout.statistics);
 
@@ -187,11 +192,11 @@ public class StatisticsActivity extends AppCompatActivity {
                 i++;
             }
             LineDataSet dataSet = new LineDataSet(entries, "");
-            dataSet.setColors(getResources().getColor(R.color.colorPrimary));
+            dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
             dataSet.setValueFormatter(new YValueFormatter(false));
-            dataSet.setCircleColor(getResources().getColor(R.color.colorPrimaryDark));
-            dataSet.setCircleColorHole(getResources().getColor(R.color.colorPrimaryDark));
-            dataSet.setHighLightColor(getResources().getColor(R.color.colorAccent));
+            dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+            dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+            dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
             dataSet.setCircleRadius(6f);
             dataSet.setLineWidth(2f);
             dataSet.setValueTextSize(12f);
@@ -247,12 +252,12 @@ public class StatisticsActivity extends AppCompatActivity {
 
         YAxis yAxis = chart.getAxisLeft();
         LimitLine max = new LimitLine(35, "SAFE MAX: 35");
-        max.setLineColor(getResources().getColor(R.color.colorAccent));
+        max.setLineColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
         max.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_BOTTOM);
         max.setLineWidth(2f);
         max.setTextSize(9f);
         LimitLine min = new LimitLine(21, "SAFE MIN: 21");
-        min.setLineColor(getResources().getColor(R.color.colorAccent));
+        min.setLineColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
         min.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
         min.setLineWidth(2f);
         min.setTextSize(9f);
@@ -275,11 +280,11 @@ public class StatisticsActivity extends AppCompatActivity {
 
             if(entries.size() > 0) {
                 LineDataSet dataSet = new LineDataSet(entries, "");
-                dataSet.setColors(getResources().getColor(R.color.colorPrimary));
+                dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
                 dataSet.setValueFormatter(new YValueFormatter(false));
-                dataSet.setCircleColor(getResources().getColor(R.color.colorPrimaryDark));
-                dataSet.setCircleColorHole(getResources().getColor(R.color.colorPrimaryDark));
-                dataSet.setHighLightColor(getResources().getColor(R.color.colorAccent));
+                dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+                dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+                dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
                 dataSet.setCircleRadius(6f);
                 dataSet.setLineWidth(2f);
                 dataSet.setValueTextSize(12f);
@@ -335,7 +340,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
             BarDataSet dataSet = new BarDataSet(entries, "");
             dataSet.setValueFormatter(new YValueFormatter(true));
-            dataSet.setColor(getResources().getColor(R.color.colorAccent));
+            dataSet.setColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
 
             BarData barData = new BarData(dataSet);
 
@@ -355,9 +360,9 @@ public class StatisticsActivity extends AppCompatActivity {
         // check if this chart has been created before
         if(barChart == null) {
             // programmatically create a BarChart
-            BarChart chart = new BarChart(getApplicationContext());
+            BarChart chart = new BarChart(StatisticsActivity.this);
             chart.setNoDataText(getResources().getString(R.string.no_data));
-            chart.setNoDataTextColor(getResources().getColor(R.color.colorPrimary));
+            chart.setNoDataTextColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setDrawGridLines(false);
@@ -413,12 +418,12 @@ public class StatisticsActivity extends AppCompatActivity {
 
         YAxis yAxis = chart.getAxisLeft();
         LimitLine max = new LimitLine(7, "SAFE MAX: 7");
-        max.setLineColor(getResources().getColor(R.color.colorAccent));
+        max.setLineColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
         max.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_BOTTOM);
         max.setLineWidth(2f);
         max.setTextSize(9f);
         LimitLine min = new LimitLine(2, "SAFE MIN: 2");
-        min.setLineColor(getResources().getColor(R.color.colorAccent));
+        min.setLineColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
         min.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
         min.setLineWidth(2f);
         min.setTextSize(9f);
@@ -447,11 +452,11 @@ public class StatisticsActivity extends AppCompatActivity {
 
             if(entries.size() > 0) {
                 LineDataSet dataSet = new LineDataSet(entries, "");
-                dataSet.setColors(getResources().getColor(R.color.colorPrimary));
+                dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
                 dataSet.setValueFormatter(new YValueFormatter(false));
-                dataSet.setCircleColor(getResources().getColor(R.color.colorPrimaryDark));
-                dataSet.setCircleColorHole(getResources().getColor(R.color.colorPrimaryDark));
-                dataSet.setHighLightColor(getResources().getColor(R.color.colorAccent));
+                dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+                dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+                dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
                 dataSet.setCircleRadius(6f);
                 dataSet.setLineWidth(2f);
                 dataSet.setValueTextSize(12f);
@@ -481,9 +486,9 @@ public class StatisticsActivity extends AppCompatActivity {
         // check if this chart has been created before
         if(lineChart == null) {
             // programmatically create a LineChart
-            LineChart chart = new LineChart(getApplicationContext());
+            LineChart chart = new LineChart(StatisticsActivity.this);
             chart.setNoDataText(getResources().getString(R.string.no_data));
-            chart.setNoDataTextColor(getResources().getColor(R.color.colorPrimary));
+            chart.setNoDataTextColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setDrawGridLines(false);

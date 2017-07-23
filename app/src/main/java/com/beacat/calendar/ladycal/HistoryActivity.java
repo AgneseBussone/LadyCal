@@ -46,6 +46,10 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        if(i != null){
+            setTheme(i.getIntExtra("themeId", R.style.AppTheme));
+        }
         setContentView(R.layout.history);
 
         listView = (ListView)findViewById(R.id.periods_list);
@@ -78,7 +82,7 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void result) {
                 if(entries != null) {
-                    adapter = new MyArrayAdapter(getApplicationContext(), entries);
+                    adapter = new MyArrayAdapter(HistoryActivity.this, entries);
                     listView.setAdapter(adapter);
                 }
                 // hide the spinner
@@ -107,7 +111,7 @@ public class HistoryActivity extends AppCompatActivity {
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                new DeleteAllPeriodsTask(getApplicationContext()).execute();
+                                new DeleteAllPeriodsTask(HistoryActivity.this).execute();
                                 entries.clear();
                                 adapter.notifyDataSetChanged();
                                 dialog.dismiss();
@@ -159,7 +163,7 @@ public class HistoryActivity extends AppCompatActivity {
                 Day endDay = new Day(null, end.getYear(), end.getMonth(), end.getDayOfMonth());
 
                 if(startDay.getDayUTC() <= endDay.getDayUTC()) {
-                    new AddPeriodTask(getApplicationContext(), null).execute(startDay, endDay);
+                    new AddPeriodTask(HistoryActivity.this, null).execute(startDay, endDay);
 
                     // It is an insertion at the end of the list, I don't care about sorting
                     // because the next time the user call the activity the list will be sorted
@@ -169,7 +173,7 @@ public class HistoryActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Error: start day after end day", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HistoryActivity.this, "Error: start day after end day", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -221,8 +225,10 @@ public class HistoryActivity extends AppCompatActivity {
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(item.getStartDay());
             period.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(cal.getTime()));
+            period.setTextColor(UtilityClass.getThemeColor(HistoryActivity.this, R.attr.colorPrimaryDark));
             long days = ExtendedCalendarView.getDifferenceInDays(item.getEndDay(), item.getStartDay()) + 1;
-            length.setText(String.valueOf(days));
+            length.setText("Length: " + String.valueOf(days));
+            length.setTextColor(UtilityClass.getThemeColor(HistoryActivity.this, R.attr.colorAccent));
 
             /* Delete button */
             deleteBtn.setOnClickListener(new View.OnClickListener() {
@@ -234,7 +240,7 @@ public class HistoryActivity extends AppCompatActivity {
                     alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new DeletePeriodTask(getApplicationContext()).execute(item);
+                                    new DeletePeriodTask(HistoryActivity.this).execute(item);
                                     data.remove(position);
                                     notifyDataSetChanged();
                                     dialog.dismiss();
@@ -289,7 +295,7 @@ public class HistoryActivity extends AppCompatActivity {
                                         ExtendedCalendarView.getDifferenceInDays(endDay.getDayUTC(), startDay.getDayUTC()) +1,
                                         item.getCycleLength());
 
-                                new EditPeriodTask(getApplicationContext()).execute(item, new_period);
+                                new EditPeriodTask(HistoryActivity.this).execute(item, new_period);
 
                                 data.remove(position);
                                 data.add(position, new_period);
@@ -299,7 +305,7 @@ public class HistoryActivity extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                             else{
-                                Toast.makeText(getApplicationContext(), "Error: start day after end day", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HistoryActivity.this, "Error: start day after end day", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

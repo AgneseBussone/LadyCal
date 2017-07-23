@@ -4,7 +4,7 @@
         <shape
             android:shape="oval">
             <size android:height="@dimen/buttons_dimension" android:width="@dimen/buttons_dimension"/>
-            <solid android:color="@color/colorAccent"/>
+            <solid android:color="?colorAccent"/>
 
         </shape>
     </item>

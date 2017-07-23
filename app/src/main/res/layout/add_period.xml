@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
         android:textStyle="normal|bold"
-        android:textColor="@color/colorPrimary"
+        android:textColor="?colorPrimary"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:layout_marginStart="5dp"/>
 
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView4"
         android:textStyle="normal|bold"
-        android:textColor="@color/colorPrimary"
+        android:textColor="?colorPrimary"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:layout_marginStart="5dp"/>
 

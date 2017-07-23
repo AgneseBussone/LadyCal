@@ -2,7 +2,7 @@
 <resources>
 
     <style name="DatePickerTheme" parent="android:Theme.Material.Dialog">
-        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/black</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

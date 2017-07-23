@@ -68,6 +68,7 @@
     <string name="KEY_PERIOD_REM_DATE">key_period_reminder_date</string>
     <string name="KEY_ASK_FOR_RATE">askForRate</string>
     <string name="KEY_FIRST_USE">firstUse</string>
+    <string name="KEY_THEME">themeId</string>
 
     <!-- Statistics -->
     <string name="fit_to_screen">Fit to screen</string>
