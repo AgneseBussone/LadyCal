@@ -21,7 +21,7 @@
         android:background="@drawable/date_number_background"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/date_number_text_color"
+        android:textColor="@drawable/date_number_text_color"
         android:text="31"/>
 
     <ImageView

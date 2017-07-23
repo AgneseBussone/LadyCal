@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.beacat.calendar.ladycal.R;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;

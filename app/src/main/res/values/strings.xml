@@ -9,6 +9,15 @@
     <string name="feedback">Feedback</string>
     <string name="rate">Rate app</string>
 
+    <!-- Calendar label -->
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
+
     <!-- Dialogs -->
     <string name="dialog_add_period_title">Start period?</string>
     <string name="dialog_delete_period">Delete period?</string>

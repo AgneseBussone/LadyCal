@@ -7,18 +7,15 @@
     <color name="colorPrimary_blueTheme">#0066cb</color>
     <color name="colorPrimaryDark_blueTheme">#01326c</color>
     <color name="colorAccent_blueTheme">#8cd3ff</color>
-    <color name="colorPrimaryDarkDim_blueTheme">#d301326c</color>
 
     <color name="colorPrimary_greenTheme">#2d6b22</color>
     <color name="colorPrimaryDark_greenTheme">#1a2f04</color>
     <color name="colorAccent_greenTheme">#bacb4d</color>
-    <color name="colorPrimaryDarkDim_greenTheme">#d31a2f04</color>
 
     <color name="colorPrimary_purpleTheme">#5e2b85</color>
     <color name="colorPrimaryDark_purpleTheme">#160410</color>
     <color name="colorAccent_purpleTheme">#b38df0</color>
-    <color name="colorPrimaryDarkDim_purpleTheme">#d3160410</color>
-    
+
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="tutorial_background">#d3000000</color>

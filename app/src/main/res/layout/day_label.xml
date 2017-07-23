@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:textColor="@color/accent"/>
+        android:textColor="?colorAccent"/>
 
 </RelativeLayout>
