@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark_baseTheme">#460001</color>
     <color name="colorAccent_baseTheme">#ff9f9f</color>
 
+    <color name="colorPrimary_blueTheme">#0066cb</color>
+    <color name="colorPrimaryDark_blueTheme">#01326c</color>
+    <color name="colorAccent_blueTheme">#8cd3ff</color>
+    <color name="colorPrimaryDarkDim_blueTheme">#d301326c</color>
 
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
@@ -11,4 +15,6 @@
     <color name="black">#000000</color>
     <color name="splash_start">#6600ff</color>
     <color name="splash_end">#ff0055</color>
+
+
 </resources>
