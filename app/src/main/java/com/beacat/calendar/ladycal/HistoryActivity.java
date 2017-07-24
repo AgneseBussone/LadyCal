@@ -32,6 +32,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static com.beacat.calendar.ladycal.R.string.KEY_THEME;
+import static com.beacat.calendar.ladycal.R.style.AppTheme;
+
 /**
  * Activity for adding past periods to the database.
  * It shows also all the periods already into the db.
@@ -48,7 +51,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         if(i != null){
-            setTheme(i.getIntExtra("themeId", R.style.AppTheme));
+            setTheme(i.getIntExtra(getString(KEY_THEME), AppTheme));
         }
         setContentView(R.layout.history);
 

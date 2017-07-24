@@ -14,6 +14,10 @@ import android.view.View;
 import java.util.List;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.beacat.calendar.ladycal.R.string;
+import static com.beacat.calendar.ladycal.R.string.KEY_THEME;
+import static com.beacat.calendar.ladycal.R.style;
+import static com.beacat.calendar.ladycal.R.style.AppTheme;
 
 /**
  * Activity that handles rating.
@@ -26,7 +30,7 @@ public class RateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         if(i != null){
-            setTheme(i.getIntExtra("themeId", R.style.AppTheme));
+            setTheme(i.getIntExtra(getString(KEY_THEME), AppTheme));
         }
         setContentView(R.layout.rate_layout_base);
 

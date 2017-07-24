@@ -1,5 +1,6 @@
 package com.beacat.calendar.ladycal;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -27,13 +29,13 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         if(i != null){
-            themeId = i.getIntExtra("themeId", R.style.AppTheme);
+            themeId = i.getIntExtra(getString(R.string.KEY_THEME), R.style.AppTheme);
             setTheme(themeId);
         }
 
         // Display the fragment as the main content.
         Bundle bundle = new Bundle();
-        bundle.putInt("themeId", themeId);
+        bundle.putInt(getString(R.string.KEY_THEME), themeId);
         SettingsFragment settingsFragment = new SettingsFragment();
         settingsFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
@@ -115,7 +117,7 @@ public class SettingsActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
 
             Bundle bundle = getArguments();
-            themeId = bundle.getInt("themeId", R.style.AppTheme);
+            themeId = bundle.getInt(getString(R.string.KEY_THEME), R.style.AppTheme);
 
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.preferences);
@@ -217,7 +219,7 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent i = new Intent(getActivity().getApplicationContext(), BackupActivity.class);
-                    i.putExtra("themeId", themeId);
+                    i.putExtra(getString(R.string.KEY_THEME), themeId);
                     startActivity(i);
                     return false;
                 }
@@ -226,6 +228,24 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
 
+                    return true;
+                }
+            });
+
+            // Theme
+            final Preference pref_theme = findPreference(getString(R.string.KEY_THEME));
+            pref_theme.setSummary(pref_theme.getSharedPreferences().getString(getString(R.string.KEY_THEME), getString(R.string.pref_theme_default)));
+            pref_theme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    pref_theme.setSummary(newValue.toString());
+                    Activity baseActivity = getActivity();
+                    // Restart the app
+                    Toast.makeText(baseActivity.getApplicationContext(), "Restarting app.....", Toast.LENGTH_SHORT).show();
+                    Intent i = baseActivity.getBaseContext().getPackageManager()
+                            .getLaunchIntentForPackage( baseActivity.getPackageName() );
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
                     return true;
                 }
             });

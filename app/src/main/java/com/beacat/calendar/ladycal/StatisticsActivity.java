@@ -43,6 +43,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static com.beacat.calendar.ladycal.R.string;
+import static com.beacat.calendar.ladycal.R.string.KEY_THEME;
+import static com.beacat.calendar.ladycal.R.style;
+import static com.beacat.calendar.ladycal.R.style.AppTheme;
+
 /**
  * Activity for showing the statistics.
  */
@@ -67,7 +72,7 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         if(i != null){
-            setTheme(i.getIntExtra("themeId", R.style.AppTheme));
+            setTheme(i.getIntExtra(getString(KEY_THEME), AppTheme));
         }
 
         db = PeriodDatabase.getInstance(getApplicationContext());

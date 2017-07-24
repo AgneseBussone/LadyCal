@@ -19,6 +19,12 @@
                     android:entries="@array/pref_history_entries"
                     android:entryValues="@array/pref_history_values"
                     android:defaultValue="@string/pref_history_default"/>
+
+    <ListPreference android:key="@string/KEY_THEME"
+                    android:title="@string/pref_theme_title"
+                    android:entries="@array/pref_theme_entries"
+                    android:entryValues="@array/pref_theme_entries"
+                    android:defaultValue="@string/pref_theme_default"/>
     </PreferenceCategory>
     <Preference
         android:title="divider"

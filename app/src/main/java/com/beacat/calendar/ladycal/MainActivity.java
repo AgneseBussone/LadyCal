@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.beacat.calendar.ladycal.R.string.KEY_THEME;
+
 public class MainActivity extends AppCompatActivity {
 
     // constant required to retrieve data in case the user wants to insert meds data from history activity
@@ -189,7 +191,15 @@ public class MainActivity extends AppCompatActivity {
         checkReminders(sharedPref);
 
         // theme
-        themeId = Integer.parseInt(sharedPref.getString(getString(R.string.KEY_THEME), String.valueOf(R.style.AppTheme)));
+        String color = sharedPref.getString(getString(R.string.KEY_THEME), getString(R.string.pref_theme_default));
+        if(color.equals(getString(R.string.pref_theme_default)))
+            themeId = R.style.AppTheme;
+        else if(color.equals(getString(R.string.pref_theme_blue)))
+            themeId = R.style.BlueTheme;
+        else if(color.equals(getString(R.string.pref_theme_green)))
+            themeId = R.style.GreenTheme;
+        else if(color.equals(getString(R.string.pref_theme_purple)))
+            themeId = R.style.PurpleTheme;
     }
 
     @Override
@@ -231,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.add_history: {
                 Intent intent = new Intent(this, HistoryActivity.class);
-                intent.putExtra("themeId", themeId);
+                intent.putExtra(getString(KEY_THEME), themeId);
                 Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivityForResult(intent, CHANGE_MEDS_CODE, bundle);
@@ -239,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.settings: {
                 Intent i = new Intent(this, SettingsActivity.class);
-                i.putExtra("themeId", themeId);
+                i.putExtra(getString(KEY_THEME), themeId);
                 Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
@@ -247,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.statistics: {
                 Intent i = new Intent(this, StatisticsActivity.class);
-                i.putExtra("themeId", themeId);
+                i.putExtra(getString(KEY_THEME), themeId);
                 Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
@@ -283,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.rate: {
                 Intent i = new Intent(this, RateActivity.class);
-                i.putExtra("themeId", themeId);
+                i.putExtra(getString(KEY_THEME), themeId);
                 Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);

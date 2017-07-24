@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
+import static com.beacat.calendar.ladycal.R.string.KEY_THEME;
+import static com.beacat.calendar.ladycal.R.style.AppTheme;
+
 /**
  * Activity that shows backup information. It doesn't perform a backup,
  * because the app relies on the auto backup of Android.
@@ -19,7 +22,7 @@ public class BackupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         if(i != null){
-            setTheme(i.getIntExtra("themeId", R.style.AppTheme));
+            setTheme(i.getIntExtra(getString(KEY_THEME), AppTheme));
         }
         setContentView(R.layout.backup_layout);
 
