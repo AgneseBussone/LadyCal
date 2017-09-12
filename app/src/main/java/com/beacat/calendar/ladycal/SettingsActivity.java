@@ -1,10 +1,11 @@
 package com.beacat.calendar.ladycal;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -19,10 +20,17 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 /**
  * Activity for setting the preferences
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private String fragment_tag = "setting_fragment";
+
+    // theme data
     private int themeId;
+    private ComponentName defaultComponent;
+    private ComponentName blueComponent;
+    private ComponentName greenComponent;
+    private ComponentName purpleComponent;
+    private PackageManager pm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,12 @@ public class SettingsActivity extends AppCompatActivity {
             themeId = i.getIntExtra(getString(R.string.KEY_THEME), R.style.AppTheme);
             setTheme(themeId);
         }
+
+        defaultComponent = new ComponentName(this, "com.beacat.calendar.ladycal.SplashDefault");
+        blueComponent = new ComponentName(this, "com.beacat.calendar.ladycal.SplashBlue");
+        greenComponent = new ComponentName(this, "com.beacat.calendar.ladycal.SplashGreen");
+        purpleComponent = new ComponentName(this, "com.beacat.calendar.ladycal.SplashPurple");
+        pm = this.getPackageManager();
 
         // Display the fragment as the main content.
         Bundle bundle = new Bundle();
@@ -47,6 +61,56 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Add back navigation
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void resetAppIcon(){
+        // enable default splashscreen
+        enableComponent(defaultComponent, PackageManager.DONT_KILL_APP);
+        // disable all the aliases
+        disableComponent(blueComponent, PackageManager.DONT_KILL_APP);
+        disableComponent(greenComponent, PackageManager.DONT_KILL_APP);
+        disableComponent(purpleComponent, PackageManager.DONT_KILL_APP);
+    }
+
+    private void enableBlue(){
+        // enable blue
+        enableComponent(blueComponent, PackageManager.DONT_KILL_APP);
+        // disable all the others
+        disableComponent(defaultComponent, PackageManager.DONT_KILL_APP);
+        disableComponent(greenComponent, PackageManager.DONT_KILL_APP);
+        disableComponent(purpleComponent, PackageManager.DONT_KILL_APP);
+    }
+
+    private void enableGreen(){
+        // enable green
+        enableComponent(greenComponent, PackageManager.DONT_KILL_APP);
+        // disable all the others
+        disableComponent(defaultComponent, PackageManager.DONT_KILL_APP);
+        disableComponent(blueComponent, PackageManager.DONT_KILL_APP);
+        disableComponent(purpleComponent, PackageManager.DONT_KILL_APP);
+    }
+
+    private void enablePurple(){
+        // enable purple
+        enableComponent(purpleComponent, PackageManager.DONT_KILL_APP);
+        // disable all the others
+        disableComponent(defaultComponent, PackageManager.DONT_KILL_APP);
+        disableComponent(greenComponent, PackageManager.DONT_KILL_APP);
+        disableComponent(blueComponent, PackageManager.DONT_KILL_APP);
+    }
+
+    private void enableComponent(ComponentName componentName, int flag) {
+        pm.setComponentEnabledSetting(
+                componentName,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                flag);
+    }
+
+    private void disableComponent(ComponentName componentName, int flag) {
+        pm.setComponentEnabledSetting(
+                componentName,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                flag);
     }
 
     @Override
@@ -102,6 +166,52 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.KEY_THEME))){
+            final String color = sharedPreferences.getString(key, getString(R.string.pref_theme_default));
+            AlertDialog dialog = new AlertDialog.Builder(SettingsActivity.this).create();
+            dialog.setTitle("Restart required");
+            dialog.setMessage(getString(R.string.restart_message, color));
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    // enable the correct splash alias
+                    if (color.equals(getString(R.string.pref_theme_default)))
+                        resetAppIcon();
+                    else if (color.equals(getString(R.string.pref_theme_blue)))
+                        enableBlue();
+                    else if (color.equals(getString(R.string.pref_theme_green)))
+                        enableGreen();
+                    else if (color.equals(getString(R.string.pref_theme_purple)))
+                        enablePurple();
+
+                    // Restart the app
+                    Toast.makeText(SettingsActivity.this, "Restarting app.....", Toast.LENGTH_SHORT).show();
+                    Intent i = getBaseContext().getPackageManager()
+                            .getLaunchIntentForPackage(getPackageName());
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                }
+            });
+            dialog.setButton(DialogInterface.BUTTON_NEUTRAL, "CONTINUE", (DialogInterface.OnClickListener) null);
+            dialog.show();
+        }
     }
 
 
@@ -235,20 +345,6 @@ public class SettingsActivity extends AppCompatActivity {
             // Theme
             final Preference pref_theme = findPreference(getString(R.string.KEY_THEME));
             pref_theme.setSummary(pref_theme.getSharedPreferences().getString(getString(R.string.KEY_THEME), getString(R.string.pref_theme_default)));
-            pref_theme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    pref_theme.setSummary(newValue.toString());
-                    Activity baseActivity = getActivity();
-                    // Restart the app
-                    Toast.makeText(baseActivity.getApplicationContext(), "Restarting app.....", Toast.LENGTH_SHORT).show();
-                    Intent i = baseActivity.getBaseContext().getPackageManager()
-                            .getLaunchIntentForPackage( baseActivity.getPackageName() );
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                    return true;
-                }
-            });
         }
     }
 }

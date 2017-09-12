@@ -9,11 +9,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_base"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:replace="android:icon">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -38,15 +36,60 @@
             android:name=".TutorialActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TutorialTheme"/>
+
         <activity android:name=".SplashActivity"
                   android:theme="@style/SplashTheme"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- Alias activities with different icons -->
+        <activity-alias
+            android:name=".SplashDefault"
+            android:enabled="true"
+            android:icon="@mipmap/ic_launcher_base"
+            android:label="@string/app_name"
+            android:targetActivity=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+        android:name=".SplashBlue"
+        android:enabled="false"
+        android:icon="@mipmap/ic_launcher_blue"
+        android:label="@string/app_name"
+        android:targetActivity=".SplashActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".SplashGreen"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_green"
+            android:label="@string/app_name"
+            android:targetActivity=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".SplashPurple"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_purple"
+            android:label="@string/app_name"
+            android:targetActivity=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
 
         <receiver android:name=".Reminder">
             <intent-filter>

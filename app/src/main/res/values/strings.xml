@@ -66,6 +66,7 @@
     <string name="pref_theme_blue">Blue</string>
     <string name="pref_theme_green">Green</string>
     <string name="pref_theme_purple">Purple</string>
+    <string name="restart_message">The app will be automatically restarted with the %1$s theme!</string>
 
     <!-- Preferences keys -->
     <string name="KEY_DAY">key_pref_startWeekDay</string>
