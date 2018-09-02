@@ -5,4 +5,4 @@ Android App.
 
 Webpage: https://agnesebussone.github.io/LadyCal/
 
-[![Get it on Google Play](docs/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.beacat.calendar.ladycal&hl=en)
+<a href="https://play.google.com/store/apps/details?id=com.beacat.calendar.ladycal&hl=en"><img src="docs/google-play-badge.png" width="200"></a>
