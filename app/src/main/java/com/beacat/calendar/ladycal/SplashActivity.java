@@ -2,7 +2,7 @@ package com.beacat.calendar.ladycal;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Splash screen shown the minimum amount of time needed to start the app.
