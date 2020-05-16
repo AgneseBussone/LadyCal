@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +11,11 @@ import android.widget.FrameLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -27,11 +27,9 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.tyczj.extendedcalendarview.Med;
 import com.tyczj.extendedcalendarview.Period;
 import com.tyczj.extendedcalendarview.PeriodDatabase;
@@ -198,7 +196,7 @@ public class StatisticsActivity extends AppCompatActivity {
             dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
             dataSet.setValueFormatter(new YValueFormatter(false));
             dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-            dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+//            dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
             dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
             dataSet.setCircleRadius(6f);
             dataSet.setLineWidth(2f);
@@ -212,7 +210,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
                     AlertDialog  alertDialog = new AlertDialog.Builder(StatisticsActivity.this).create();
-                    alertDialog.setTitle(formatter.getFormattedValue(e.getX(), chart.getXAxis()));
+                    alertDialog.setTitle(formatter.getFormattedValue(e.getX()));
                     String mex = "";
                     Med m = allMedsList.get((int)e.getX());
                     for(int i = 0; i < m.getMeds().length; i++){
@@ -286,7 +284,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
                 dataSet.setValueFormatter(new YValueFormatter(false));
                 dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-                dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+//                dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
                 dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
                 dataSet.setCircleRadius(6f);
                 dataSet.setLineWidth(2f);
@@ -458,7 +456,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
                 dataSet.setValueFormatter(new YValueFormatter(false));
                 dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-                dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
+//                dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
                 dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
                 dataSet.setCircleRadius(6f);
                 dataSet.setLineWidth(2f);
@@ -546,13 +544,13 @@ public class StatisticsActivity extends AppCompatActivity {
     /**
      * Inner class to format the axis values (from UTC to month/year)
      */
-    private class XValueDateFormatter implements IAxisValueFormatter {
+    private static class XValueDateFormatter extends ValueFormatter {
 
         private String[] values;
 
-        public XValueDateFormatter(){}
+        XValueDateFormatter(){}
 
-        public void formatPeriod(List<Period> dates) {
+        void formatPeriod(List<Period> dates) {
             values = new String[dates.size()];
             Calendar cal = Calendar.getInstance();
             int i = 0;
@@ -563,7 +561,7 @@ public class StatisticsActivity extends AppCompatActivity {
             }
         }
 
-        public void formatMed(List<Med> dates){
+        void formatMed(List<Med> dates){
             values = new String[dates.size()];
             Calendar cal = Calendar.getInstance();
             int i = 0;
@@ -575,7 +573,7 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         @Override
-        public String getFormattedValue(float value, AxisBase axis) {
+        public String getFormattedValue(float value) {
             if(value >= 0 && value < values.length)
                 return values[(int)value];
             else
@@ -584,12 +582,12 @@ public class StatisticsActivity extends AppCompatActivity {
 
     }
 
-    private class YValueFormatter implements IValueFormatter {
+    private static class YValueFormatter extends ValueFormatter {
 
         private NumberFormat mFormat;
         private boolean hideValue;
 
-        public YValueFormatter(boolean hideValue) {
+        YValueFormatter(boolean hideValue) {
             this.hideValue = hideValue;
             if(!hideValue) {
                 mFormat = NumberFormat.getInstance();
@@ -598,7 +596,7 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+        public String getFormattedValue(float value) {
             if (!hideValue) {
                 if (value < 0)
                     return "N/A";
@@ -609,12 +607,12 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
-    private class XValueDayFormatter implements IAxisValueFormatter {
+    private static class XValueDayFormatter extends ValueFormatter {
 
-        public XValueDayFormatter(){}
+        XValueDayFormatter(){}
 
         @Override
-        public String getFormattedValue(float value, AxisBase axis) {
+        public String getFormattedValue(float value) {
             value++;
             return "Day " + (int)value;
         }
