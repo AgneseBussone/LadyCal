@@ -84,6 +84,7 @@ public class StatisticsActivity extends AppCompatActivity {
         bar.setDisplayHomeAsUpEnabled(true);
 
         final TextView infoTV = (TextView)findViewById(R.id.info);
+        infoTV.setTextColor(UtilityClass.getChartInfoTextColor(this));
         infoTV.setVisibility(View.INVISIBLE);
 
         TabHost host = (TabHost) findViewById(R.id.tabHost);

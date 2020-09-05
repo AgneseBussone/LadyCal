@@ -34,6 +34,11 @@ public class UtilityClass {
         return isNightModeOn(context) ? context.getResources().getColor(R.color.white) : getThemeColor(context, R.attr.colorPrimary);
     }
 
+    @ColorInt
+    public static int getChartInfoTextColor(final Context context) {
+        return isNightModeOn(context) ? context.getResources().getColor(R.color.white) : getThemeColor(context, R.attr.colorPrimaryDark);
+    }
+
     public static boolean isNightModeOn(Context context) {
         int nightModeFlags =
                 context.getResources().getConfiguration().uiMode &
