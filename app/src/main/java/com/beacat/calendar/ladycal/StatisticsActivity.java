@@ -363,7 +363,7 @@ public class StatisticsActivity extends AppCompatActivity {
             // programmatically create a BarChart
             BarChart chart = new BarChart(StatisticsActivity.this);
             chart.setNoDataText(getResources().getString(R.string.no_data));
-            chart.setNoDataTextColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
+            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(StatisticsActivity.this));
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setDrawGridLines(false);
@@ -489,7 +489,7 @@ public class StatisticsActivity extends AppCompatActivity {
             // programmatically create a LineChart
             LineChart chart = new LineChart(StatisticsActivity.this);
             chart.setNoDataText(getResources().getString(R.string.no_data));
-            chart.setNoDataTextColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
+            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(StatisticsActivity.this));
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setDrawGridLines(false);

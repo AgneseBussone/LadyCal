@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import androidx.annotation.ColorInt;
+import androidx.core.content.ContextCompat;
+
 import android.util.TypedValue;
 
 /**
@@ -25,6 +27,11 @@ public class UtilityClass {
     @ColorInt
     public static int getMonthColor(final Context context) {
         return isNightModeOn(context) ? getThemeColor(context, R.attr.colorAccent) : getThemeColor(context, R.attr.colorPrimaryDark);
+    }
+
+    @ColorInt
+    public static int getNoDataTextColor(final Context context) {
+        return isNightModeOn(context) ? context.getResources().getColor(R.color.white) : getThemeColor(context, R.attr.colorPrimary);
     }
 
     public static boolean isNightModeOn(Context context) {
