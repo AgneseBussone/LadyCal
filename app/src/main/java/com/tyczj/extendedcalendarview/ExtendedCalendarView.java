@@ -96,6 +96,9 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             prev.setId(prevMonthId);
             prev.setLayoutParams(params);
             prev.setImageResource(R.drawable.navigation_previous_item);
+            if (UtilityClass.isNightModeOn(context)) {
+                prev.setColorFilter(context.getResources().getColor(R.color.white));
+            }
             prev.setOnClickListener(this);
             base.addView(prev);
 
@@ -119,6 +122,9 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             params.addRule(RelativeLayout.CENTER_VERTICAL);
             next = new ImageView(context);
             next.setImageResource(R.drawable.navigation_next_item);
+            if (UtilityClass.isNightModeOn(context)) {
+                next.setColorFilter(context.getResources().getColor(R.color.white));
+            }
             next.setLayoutParams(params);
             nextMonthId = View.generateViewId();
             next.setId(nextMonthId);
