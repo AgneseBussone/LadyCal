@@ -22,9 +22,13 @@
     <color name="black">#000000</color>
     <color name="splash_start">#6600ff</color>
     <color name="splash_end">#ff0055</color>
+    <color name="blu_grey">#475263</color>
+    <color name="light_grey">#C1C3C5</color>
 
     <color name="date_number_text_color">?colorPrimaryDark</color>
     <color name="day_selected_bg">#403838</color>
     <color name="today_bg">?colorAccent</color>
     <color name="expected">?colorPrimary</color>
+    <color name="chart_text_color">@color/black</color>
+    <color name="chart_limit_text_color">@color/black</color>
 </resources>

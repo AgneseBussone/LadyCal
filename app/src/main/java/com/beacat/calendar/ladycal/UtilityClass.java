@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import androidx.annotation.ColorInt;
-import androidx.core.content.ContextCompat;
 
 import android.util.TypedValue;
 
@@ -37,6 +36,21 @@ public class UtilityClass {
     @ColorInt
     public static int getChartInfoTextColor(final Context context) {
         return isNightModeOn(context) ? context.getResources().getColor(R.color.white) : getThemeColor(context, R.attr.colorPrimaryDark);
+    }
+
+    @ColorInt
+    public static int getLineChartCircleColor(final Context context) {
+        return isNightModeOn(context) ? getThemeColor(context, R.attr.colorAccent) : getThemeColor(context, R.attr.colorPrimaryDark);
+    }
+
+    @ColorInt
+    public static int getLineChartDataColor(final Context context) {
+        return isNightModeOn(context) ? getThemeColor(context, R.attr.colorAccent) : getThemeColor(context, R.attr.colorPrimary);
+    }
+
+    @ColorInt
+    public static int getLineChartLimitColor(final Context context) {
+        return isNightModeOn(context) ? context.getResources().getColor(R.color.blu_grey) : getThemeColor(context, R.attr.colorAccent);
     }
 
     public static boolean isNightModeOn(Context context) {

@@ -186,6 +186,7 @@ public class StatisticsActivity extends AppCompatActivity {
             Description descr = new Description();
             descr.setText(getResources().getString(R.string.med_per_period_chart_descr));
             descr.setTextSize(12f);
+            descr.setTextColor(getResources().getColor(R.color.chart_text_color));
             chart.setDescription(descr);
 
             float i = 0;
@@ -194,14 +195,14 @@ public class StatisticsActivity extends AppCompatActivity {
                 i++;
             }
             LineDataSet dataSet = new LineDataSet(entries, "");
-            dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
+            dataSet.setColors(UtilityClass.getLineChartDataColor(this));
             dataSet.setValueFormatter(new YValueFormatter(false));
-            dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-//            dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-            dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
+            dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this));
+            dataSet.setHighLightColor(UtilityClass.getThemeColor(this, R.attr.colorAccent));
             dataSet.setCircleRadius(6f);
             dataSet.setLineWidth(2f);
             dataSet.setValueTextSize(12f);
+            dataSet.setValueTextColor(getResources().getColor(R.color.chart_text_color));
 
             LineData lineData = new LineData(dataSet);
 
@@ -254,15 +255,19 @@ public class StatisticsActivity extends AppCompatActivity {
 
         YAxis yAxis = chart.getAxisLeft();
         LimitLine max = new LimitLine(35, "SAFE MAX: 35");
-        max.setLineColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
+        max.setLineColor(UtilityClass.getLineChartLimitColor(this));
         max.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_BOTTOM);
         max.setLineWidth(2f);
         max.setTextSize(9f);
+        max.setTextColor(getResources().getColor(R.color.chart_limit_text_color));
+
         LimitLine min = new LimitLine(21, "SAFE MIN: 21");
-        min.setLineColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
+        min.setLineColor(UtilityClass.getLineChartLimitColor(this));
         min.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
         min.setLineWidth(2f);
         min.setTextSize(9f);
+        min.setTextColor(getResources().getColor(R.color.chart_limit_text_color));
+
         yAxis.addLimitLine(max);
         yAxis.addLimitLine(min);
 
@@ -273,6 +278,7 @@ public class StatisticsActivity extends AppCompatActivity {
             Description descr = new Description();
             descr.setText(getResources().getString(R.string.days_descr));
             descr.setTextSize(12f);
+            descr.setTextColor(getResources().getColor(R.color.chart_text_color));
             chart.setDescription(descr);
 
             // skip the insertion of the last cycle because it's a guess, not real data
@@ -282,14 +288,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
             if(entries.size() > 0) {
                 LineDataSet dataSet = new LineDataSet(entries, "");
-                dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
+                dataSet.setColors(UtilityClass.getLineChartDataColor(this));
                 dataSet.setValueFormatter(new YValueFormatter(false));
-                dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-//                dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-                dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
+                dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this));
+                dataSet.setHighLightColor(UtilityClass.getThemeColor(this, R.attr.colorAccent));
                 dataSet.setCircleRadius(6f);
                 dataSet.setLineWidth(2f);
                 dataSet.setValueTextSize(12f);
+                dataSet.setValueTextColor(getResources().getColor(R.color.chart_text_color));
 
                 LineData lineData = new LineData(dataSet);
 
@@ -324,6 +330,7 @@ public class StatisticsActivity extends AppCompatActivity {
             Description descr = new Description();
             descr.setText(getResources().getString(R.string.med_per_day_chart_descr));
             descr.setTextSize(12f);
+            descr.setTextColor(getResources().getColor(R.color.chart_text_color));
             chart.setDescription(descr);
 
             //get the max length
@@ -342,7 +349,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
             BarDataSet dataSet = new BarDataSet(entries, "");
             dataSet.setValueFormatter(new YValueFormatter(true));
-            dataSet.setColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
+            dataSet.setColor(UtilityClass.getThemeColor(this, R.attr.colorAccent));
 
             BarData barData = new BarData(dataSet);
 
@@ -362,15 +369,16 @@ public class StatisticsActivity extends AppCompatActivity {
         // check if this chart has been created before
         if(barChart == null) {
             // programmatically create a BarChart
-            BarChart chart = new BarChart(StatisticsActivity.this);
+            BarChart chart = new BarChart(this);
             chart.setNoDataText(getResources().getString(R.string.no_data));
-            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(StatisticsActivity.this));
+            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(this));
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setDrawGridLines(false);
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
             xAxis.setTextSize(12f);
+            xAxis.setTextColor(getResources().getColor(R.color.chart_text_color));
 
             // data has AxisDependency.LEFT
             YAxis left = chart.getAxisLeft();
@@ -420,15 +428,19 @@ public class StatisticsActivity extends AppCompatActivity {
 
         YAxis yAxis = chart.getAxisLeft();
         LimitLine max = new LimitLine(7, "SAFE MAX: 7");
-        max.setLineColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
+        max.setLineColor(UtilityClass.getLineChartLimitColor(this));
         max.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_BOTTOM);
         max.setLineWidth(2f);
         max.setTextSize(9f);
+        max.setTextColor(getResources().getColor(R.color.chart_limit_text_color));
+
         LimitLine min = new LimitLine(2, "SAFE MIN: 2");
-        min.setLineColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
+        min.setLineColor(UtilityClass.getLineChartLimitColor(this));
         min.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
         min.setLineWidth(2f);
         min.setTextSize(9f);
+        min.setTextColor(getResources().getColor(R.color.chart_limit_text_color));
+
         yAxis.addLimitLine(max);
         yAxis.addLimitLine(min);
 
@@ -439,6 +451,7 @@ public class StatisticsActivity extends AppCompatActivity {
             Description descr = new Description();
             descr.setText(getResources().getString(R.string.days_descr));
             descr.setTextSize(12f);
+            descr.setTextColor(getResources().getColor(R.color.chart_text_color));
             chart.setDescription(descr);
 
             // skip the insertion of the last period
@@ -454,14 +467,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
             if(entries.size() > 0) {
                 LineDataSet dataSet = new LineDataSet(entries, "");
-                dataSet.setColors(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimary));
+                dataSet.setColors(UtilityClass.getLineChartDataColor(this));
                 dataSet.setValueFormatter(new YValueFormatter(false));
-                dataSet.setCircleColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-//                dataSet.setCircleColorHole(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorPrimaryDark));
-                dataSet.setHighLightColor(UtilityClass.getThemeColor(StatisticsActivity.this, R.attr.colorAccent));
+                dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this));
+                dataSet.setHighLightColor(UtilityClass.getThemeColor(this, R.attr.colorAccent));
                 dataSet.setCircleRadius(6f);
                 dataSet.setLineWidth(2f);
                 dataSet.setValueTextSize(12f);
+                dataSet.setValueTextColor(getResources().getColor(R.color.chart_text_color));
 
                 LineData lineData = new LineData(dataSet);
 
@@ -488,15 +501,16 @@ public class StatisticsActivity extends AppCompatActivity {
         // check if this chart has been created before
         if(lineChart == null) {
             // programmatically create a LineChart
-            LineChart chart = new LineChart(StatisticsActivity.this);
+            LineChart chart = new LineChart(this);
             chart.setNoDataText(getResources().getString(R.string.no_data));
-            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(StatisticsActivity.this));
+            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(this));
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setDrawGridLines(false);
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
             xAxis.setTextSize(12f);
+            xAxis.setTextColor(getResources().getColor(R.color.chart_text_color));
 
             // data has AxisDependency.LEFT
             YAxis left = chart.getAxisLeft();
