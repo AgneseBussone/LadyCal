@@ -26,4 +26,5 @@
     <color name="date_number_text_color">?colorPrimaryDark</color>
     <color name="day_selected_bg">#403838</color>
     <color name="today_bg">?colorAccent</color>
+    <color name="expected">?colorPrimary</color>
 </resources>
