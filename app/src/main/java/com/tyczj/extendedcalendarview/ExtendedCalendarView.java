@@ -108,7 +108,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             monthTV.setTextAppearance(context, android.R.style.TextAppearance_DeviceDefault_Large);
             monthTV.setText(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " + calendar.get(Calendar.YEAR));
             monthTV.setTextSize(25);
-            monthTV.setTextColor(UtilityClass.getThemeColor(context, R.attr.colorPrimaryDark));
+            monthTV.setTextColor(UtilityClass.getMonthColor(context));
 
             base.addView(monthTV);
 
