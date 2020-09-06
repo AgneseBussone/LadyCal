@@ -1,6 +1,7 @@
 package com.beacat.calendar.ladycal;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -64,6 +65,7 @@ public class HistoryActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /* Use an Async task to load all the periods showing a spinner in the meantime */
+        @SuppressLint("StaticFieldLeak")
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             RelativeLayout linlaHeaderProgress = (RelativeLayout) findViewById(R.id.progress_layout);
 
@@ -228,10 +230,10 @@ public class HistoryActivity extends AppCompatActivity {
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(item.getStartDay());
             period.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(cal.getTime()));
-            period.setTextColor(UtilityClass.getThemeColor(HistoryActivity.this, R.attr.colorPrimaryDark));
+            period.setTextColor(UtilityClass.getPeriodListPrimaryTextColor(HistoryActivity.this));
             long days = ExtendedCalendarView.getDifferenceInDays(item.getEndDay(), item.getStartDay()) + 1;
-            length.setText("Length: " + String.valueOf(days));
-            length.setTextColor(UtilityClass.getThemeColor(HistoryActivity.this, R.attr.colorAccent));
+            length.setText("Length: " + days);
+            length.setTextColor(UtilityClass.getPeriodListSecondaryTextColor(HistoryActivity.this));
 
             /* Delete button */
             deleteBtn.setOnClickListener(new View.OnClickListener() {

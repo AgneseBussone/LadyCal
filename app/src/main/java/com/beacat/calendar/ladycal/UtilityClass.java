@@ -53,6 +53,16 @@ public class UtilityClass {
         return isNightModeOn(context) ? context.getResources().getColor(R.color.blu_grey) : getThemeColor(context, R.attr.colorAccent);
     }
 
+    @ColorInt
+    public static int getPeriodListPrimaryTextColor(final Context context) {
+        return isNightModeOn(context) ? getThemeColor(context, R.attr.colorAccent) : getThemeColor(context, R.attr.colorPrimaryDark);
+    }
+
+    @ColorInt
+    public static int getPeriodListSecondaryTextColor(final Context context) {
+        return isNightModeOn(context) ? context.getResources().getColor(R.color.light_grey) : getThemeColor(context, R.attr.colorAccent);
+    }
+
     public static boolean isNightModeOn(Context context) {
         int nightModeFlags =
                 context.getResources().getConfiguration().uiMode &

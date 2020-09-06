@@ -31,4 +31,6 @@
     <color name="expected">?colorPrimary</color>
     <color name="chart_text_color">@color/black</color>
     <color name="chart_limit_text_color">@color/black</color>
+
+    <color name="history_item_btn_bg">@color/white</color>
 </resources>

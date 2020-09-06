@@ -36,7 +36,7 @@
         android:id="@+id/deleteBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:backgroundTint="@android:color/background_light"/>
+        android:backgroundTint="@color/history_item_btn_bg"/>
 
     <Button
         android:layout_height="50dp"
@@ -45,14 +45,14 @@
         android:layout_width="50dp"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/deleteBtn"
-        android:backgroundTint="@android:color/background_light"/>
+        android:backgroundTint="@color/history_item_btn_bg"/>
 
     <Button
         android:layout_height="50dp"
         android:drawableTop="@drawable/ic_edit"
         android:id="@+id/editBtn"
         android:layout_width="50dp"
-        android:backgroundTint="@android:color/background_light"
+        android:backgroundTint="@color/history_item_btn_bg"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/editMedBtn"/>
 

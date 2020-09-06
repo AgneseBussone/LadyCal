@@ -26,4 +26,5 @@
     <color name="chart_text_color">@color/white</color>
     <color name="chart_limit_text_color">@color/light_grey</color>
 
+    <color name="history_item_btn_bg">@color/light_grey</color>
 </resources>
