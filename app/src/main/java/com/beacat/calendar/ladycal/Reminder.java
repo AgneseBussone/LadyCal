@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import androidx.core.app.NotificationCompat;
+
 import java.util.Calendar;
 
 /**
@@ -24,6 +26,9 @@ public class Reminder extends BroadcastReceiver {
     public static final int NOTIFICATION_CODE_FRIENDLY = 1;
     public static final int NOTIFICATION_CODE_START = 2;
     public static final int NOTIFICATION_CODE_END = 3;
+    public static final String FRIENDLY_CHANNEL_ID = "friendly";
+    public static final String START_CHANNEL_ID = "start";
+    public static final String END_CHANNEL_ID = "end";
 
 
     @Override
@@ -84,7 +89,22 @@ public class Reminder extends BroadcastReceiver {
     }
 
     protected static Notification getNotification(int type, Context context) {
-        Notification.Builder builder = new Notification.Builder(context);
+        String contentText = "", channel = "";
+        switch(type) {
+            case NOTIFICATION_CODE_FRIENDLY:
+                contentText = "Personal event upcoming within 3 days";
+                channel = FRIENDLY_CHANNEL_ID;
+                break;
+            case NOTIFICATION_CODE_START:
+                contentText = "Is it started? Confirm it";
+                channel = START_CHANNEL_ID;
+                break;
+            case NOTIFICATION_CODE_END:
+                channel = END_CHANNEL_ID;
+                contentText = "Last day? If so, no need to confirm";
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel);
         builder.setSmallIcon(R.drawable.ic_notification2);
         builder.setColor(UtilityClass.getThemeColor(context, R.attr.colorPrimary));
         builder.setAutoCancel(true);
@@ -93,16 +113,7 @@ public class Reminder extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pi);
         builder.setContentTitle("LadyCal");
-        switch(type) {
-            case NOTIFICATION_CODE_FRIENDLY:
-                builder.setContentText("Personal event upcoming within 3 days");
-                break;
-            case NOTIFICATION_CODE_START:
-                builder.setContentText("Is it started? Confirm it");
-                break;
-            case NOTIFICATION_CODE_END:
-                builder.setContentText("Last day? If so, no need to confirm");
-            }
+        builder.setContentText(contentText);
         return builder.build();
     }
 }

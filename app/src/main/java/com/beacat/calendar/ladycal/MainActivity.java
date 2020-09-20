@@ -2,6 +2,8 @@ package com.beacat.calendar.ladycal;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +11,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +33,9 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static com.beacat.calendar.ladycal.R.string.KEY_THEME;
+import static com.beacat.calendar.ladycal.Reminder.END_CHANNEL_ID;
+import static com.beacat.calendar.ladycal.Reminder.FRIENDLY_CHANNEL_ID;
+import static com.beacat.calendar.ladycal.Reminder.START_CHANNEL_ID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -88,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             // check if it's time to ask for rate
             checkRateCounting();
         }
+
+        createNotificationChannels();
     }
 
     private void checkRateCounting(){
@@ -227,6 +236,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void resetDateToday(View view) {
         calendar.resetDate();
+    }
+
+    private void fireTestNotification() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, 5);
+        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivity.this),
+                calendar.getTimeInMillis(),
+                Reminder.NOTIFICATION_CODE_FRIENDLY,
+                MainActivity.this);
     }
 
     @Override
@@ -581,5 +599,37 @@ public class MainActivity extends AppCompatActivity {
         if(n <= 20){
             num.setText(String.valueOf(n));
         }
+    }
+
+    private void createNotificationChannels() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            assert notificationManager != null;
+            NotificationChannel friendly = createNotificationChannel(
+                    getString(R.string.pref_friendly_reminder),
+                    getString(R.string.pref_friendly_reminder_sub),
+                    FRIENDLY_CHANNEL_ID);
+            notificationManager.createNotificationChannel(friendly);
+            NotificationChannel start = createNotificationChannel(
+                    getString(R.string.period_reminder_start),
+                    getString(R.string.period_reminder_start_desc),
+                    START_CHANNEL_ID);
+            notificationManager.createNotificationChannel(start);
+            NotificationChannel end = createNotificationChannel(
+                    getString(R.string.period_reminder_end),
+                    getString(R.string.period_reminder_end_desc),
+                    END_CHANNEL_ID);
+            notificationManager.createNotificationChannel(end);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private NotificationChannel createNotificationChannel(String name, String description, String id) {
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(id, name, importance);
+        channel.setDescription(description);
+        return channel;
     }
 }
