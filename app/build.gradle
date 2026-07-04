@@ -31,6 +31,7 @@ android {
     }
     dexOptions {
     }
+    namespace 'com.beacat.calendar.ladycal'
 }
 
 dependencies {
