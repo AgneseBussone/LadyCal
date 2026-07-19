@@ -18,7 +18,7 @@ import java.util.Calendar;
  * Broadcast receiver for showing the notification and handle the reboot of the system
  */
 
-public class Reminder extends BroadcastReceiver {
+public class ReminderJava extends BroadcastReceiver {
 
     public static final String NOTIFICATION_ID = "com.beacat.calendar.ladycal.notificationId";
     public static final String NOTIFICATION = "com.beacat.calendar.ladycal.notification";
@@ -78,10 +78,10 @@ public class Reminder extends BroadcastReceiver {
     }
 
     protected static void scheduleNotification(Notification notification, long dueDate, int type, Context context) {
-        Intent notificationIntent = new Intent(context, Reminder.class);
-        notificationIntent.putExtra(Reminder.NOTIFICATION_ID, type);
-        notificationIntent.putExtra(Reminder.NOTIFICATION, notification);
-        notificationIntent.setAction(Reminder.NOTIFICATION_ACTION);
+        Intent notificationIntent = new Intent(context, ReminderJava.class);
+        notificationIntent.putExtra(ReminderJava.NOTIFICATION_ID, type);
+        notificationIntent.putExtra(ReminderJava.NOTIFICATION, notification);
+        notificationIntent.setAction(ReminderJava.NOTIFICATION_ACTION);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, type, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
@@ -106,9 +106,9 @@ public class Reminder extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel);
         builder.setSmallIcon(R.drawable.ic_notification2);
-        builder.setColor(UtilityClass.getThemeColor(context, R.attr.colorPrimary));
+        builder.setColor(UtilityClassJava.getThemeColor(context, R.attr.colorPrimary));
         builder.setAutoCancel(true);
-        Intent i = new Intent(context, SplashActivity.class); // intent for opening the app when tap
+        Intent i = new Intent(context, SplashActivityJava.class); // intent for opening the app when tap
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pi);

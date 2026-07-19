@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beacat.calendar.ladycal.R;
-import com.beacat.calendar.ladycal.UtilityClass;
+import com.beacat.calendar.ladycal.UtilityClassJava;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -28,13 +28,13 @@ import java.util.Locale;
 *   - 1 GridView that contains the labels for the week days and the numbers
 */
 
-public class ExtendedCalendarView extends RelativeLayout implements OnItemClickListener,
+public class ExtendedCalendarViewJava extends RelativeLayout implements OnItemClickListener,
 	OnClickListener{
 
 	private Context context;
 	private OnDayClickListener dayListener;
 	private GridView calendarGV;
-	private CalendarAdapter mAdapter;
+	private CalendarAdapterJava mAdapter;
 	private Calendar calendar;
 	private TextView monthTV;
 	private RelativeLayout base;
@@ -53,22 +53,22 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
     public interface OnDayClickListener{
-		void onDayClicked(Day day);
+		void onDayClicked(DayJava day);
 	}
 
-	public ExtendedCalendarView(Context context) {
+	public ExtendedCalendarViewJava(Context context) {
 		super(context);
 		this.context = context;
 		init();
 	}
 	
-	public ExtendedCalendarView(Context context, AttributeSet attrs) {
+	public ExtendedCalendarViewJava(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
 		init();
 	}
 	
-	public ExtendedCalendarView(Context context, AttributeSet attrs,int defStyle) {
+	public ExtendedCalendarViewJava(Context context, AttributeSet attrs,int defStyle) {
 		super(context, attrs, defStyle);
 		this.context = context;
 		init();
@@ -96,7 +96,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             prev.setId(prevMonthId);
             prev.setLayoutParams(params);
             prev.setImageResource(R.drawable.navigation_previous_item);
-            if (UtilityClass.isNightModeOn(context)) {
+            if (UtilityClassJava.isNightModeOn(context)) {
                 prev.setColorFilter(context.getResources().getColor(R.color.white));
             }
             prev.setOnClickListener(this);
@@ -111,7 +111,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             monthTV.setTextAppearance(context, android.R.style.TextAppearance_DeviceDefault_Large);
             monthTV.setText(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " + calendar.get(Calendar.YEAR));
             monthTV.setTextSize(25);
-            monthTV.setTextColor(UtilityClass.getMonthColor(context));
+            monthTV.setTextColor(UtilityClassJava.getMonthColor(context));
 
             base.addView(monthTV);
 
@@ -122,7 +122,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             params.addRule(RelativeLayout.CENTER_VERTICAL);
             next = new ImageView(context);
             next.setImageResource(R.drawable.navigation_next_item);
-            if (UtilityClass.isNightModeOn(context)) {
+            if (UtilityClassJava.isNightModeOn(context)) {
                 next.setColorFilter(context.getResources().getColor(R.color.white));
             }
             next.setLayoutParams(params);
@@ -147,7 +147,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             calendarGV.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
             calendarGV.setDrawSelectorOnTop(true);
 
-           mAdapter = new CalendarAdapter(context, calendar);
+           mAdapter = new CalendarAdapterJava(context, calendar);
             calendarGV.setAdapter(mAdapter);
             calendarGV.setOnTouchListener(new OnTouchListener() {
 
@@ -194,7 +194,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		if(dayListener != null){
-			Day d = (Day) mAdapter.getItem(position);
+			DayJava d = (DayJava) mAdapter.getItem(position);
             // if it's a label, d == null. It'll reset the selectedDay in MainActivity
             dayListener.onDayClicked(d);
 		}
@@ -284,7 +284,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
         refreshCalendar();
     }
 
-    public Day getToday(){ return mAdapter.getToday(); }
+    public DayJava getToday(){ return mAdapter.getToday(); }
 
     /**
      * Utility method to calculate the difference in days between two days in UTC format.

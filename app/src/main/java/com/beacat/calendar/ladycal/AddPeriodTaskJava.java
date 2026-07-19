@@ -3,10 +3,10 @@ package com.beacat.calendar.ladycal;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.tyczj.extendedcalendarview.Day;
-import com.tyczj.extendedcalendarview.ExtendedCalendarView;
-import com.tyczj.extendedcalendarview.Period;
-import com.tyczj.extendedcalendarview.PeriodDatabase;
+import com.tyczj.extendedcalendarview.DayJava;
+import com.tyczj.extendedcalendarview.ExtendedCalendarViewJava;
+import com.tyczj.extendedcalendarview.PeriodJava;
+import com.tyczj.extendedcalendarview.PeriodDatabaseJava;
 
 import java.util.Calendar;
 
@@ -15,19 +15,19 @@ import java.util.Calendar;
  * It takes as input two Days objects (start and end).
  */
 
-public class AddPeriodTask extends AsyncTask<Day, Void, Void> { //params, progress, result
+public class AddPeriodTaskJava extends AsyncTask<DayJava, Void, Void> { //params, progress, result
 
     private Context context; // needed to insert the new entry into the db
-    private ExtendedCalendarView calendarView; //needed to refresh the view after the insertion of new period from the main view
+    private ExtendedCalendarViewJava calendarView; //needed to refresh the view after the insertion of new period from the main view
 
-    public AddPeriodTask(Context context, ExtendedCalendarView calendarView) {
+    public AddPeriodTaskJava(Context context, ExtendedCalendarViewJava calendarView) {
         super();
         this.context = context;
         this.calendarView = calendarView;
     }
 
     @Override
-    protected Void doInBackground(Day... params) {
+    protected Void doInBackground(DayJava... params) {
         Calendar cal = Calendar.getInstance();
         cal.clear();
 
@@ -38,9 +38,9 @@ public class AddPeriodTask extends AsyncTask<Day, Void, Void> { //params, progre
 
         if(start <= end) {
 
-            PeriodDatabase db = PeriodDatabase.getInstance(context);
+            PeriodDatabaseJava db = PeriodDatabaseJava.getInstance(context);
 
-            db.addPeriod(new Period(start, end));
+            db.addPeriod(new PeriodJava(start, end));
         }
 
         return null;

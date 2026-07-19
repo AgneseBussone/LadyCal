@@ -18,37 +18,37 @@ import java.util.List;
  * by every part of the application.
  */
 
-public class PeriodDatabase extends SQLiteOpenHelper{
+public class PeriodDatabaseJava extends SQLiteOpenHelper{
 
-     private final String TAG = PeriodDatabase.class.getSimpleName();
-    private static PeriodDatabase instance;
+     private final String TAG = PeriodDatabaseJava.class.getSimpleName();
+    private static PeriodDatabaseJava instance;
     private int periodLength;
     private int cycleLength;
 
-    public static synchronized PeriodDatabase getInstance(Context context) {
+    public static synchronized PeriodDatabaseJava getInstance(Context context) {
         if (instance == null) {
-            instance = new PeriodDatabase(context);
+            instance = new PeriodDatabaseJava(context);
         }
         return instance;
     }
 
-    private PeriodDatabase(Context context) {
-        super(context, DatabaseStructure.DATABASE_NAME, null, DatabaseStructure.DATABASE_VERSION);
+    private PeriodDatabaseJava(Context context) {
+        super(context, DatabaseStructureJava.DATABASE_NAME, null, DatabaseStructureJava.DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + DatabaseStructure.PeriodEntry.TABLE_NAME + "(" +
-                DatabaseStructure.PeriodEntry._ID + " integer primary key autoincrement, " +
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_START + " INTEGER, "+
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH + " INTEGER, "+
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH + " INTEGER, "+
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_END + " INTEGER);");
-        db.execSQL("CREATE TABLE " + DatabaseStructure.MedEntry.TABLE_NAME + "(" +
-                DatabaseStructure.MedEntry._ID + " integer primary key autoincrement, " +
-                DatabaseStructure.MedEntry.COLUMN_NAME_PERIOD_ID + " INTEGER, "+
-                DatabaseStructure.MedEntry.COLUMN_NAME_QUANTITY + " INTEGER, " +
-                DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC + " INTEGER);");
+        db.execSQL("CREATE TABLE " + DatabaseStructureJava.PeriodEntry.TABLE_NAME + "(" +
+                DatabaseStructureJava.PeriodEntry._ID + " integer primary key autoincrement, " +
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START + " INTEGER, "+
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH + " INTEGER, "+
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH + " INTEGER, "+
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_END + " INTEGER);");
+        db.execSQL("CREATE TABLE " + DatabaseStructureJava.MedEntry.TABLE_NAME + "(" +
+                DatabaseStructureJava.MedEntry._ID + " integer primary key autoincrement, " +
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_PERIOD_ID + " INTEGER, "+
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_QUANTITY + " INTEGER, " +
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC + " INTEGER);");
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PeriodDatabase extends SQLiteOpenHelper{
      * Insert a new period into the database
      * @param period
      */
-    public void addPeriod(Period period){
+    public void addPeriod(PeriodJava period){
         if(searchPeriodId(period) == -1 ) {
 
             // Create and/or open the database for writing
@@ -79,9 +79,9 @@ public class PeriodDatabase extends SQLiteOpenHelper{
                     // search the next period (history insertion)
                     String query = String.format(
                             "SELECT MIN(%s) FROM %s WHERE %s > %s",
-                            DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                            DatabaseStructure.PeriodEntry.TABLE_NAME,
-                            DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
+                            DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                            DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                            DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
                             String.valueOf(period.getStartDay()));
 
                     Cursor c = db.rawQuery(query, null);
@@ -96,7 +96,7 @@ public class PeriodDatabase extends SQLiteOpenHelper{
                         period.setCycleLength(cycleLength);
                     }
                     else{
-                        period.setCycleLength(ExtendedCalendarView.getDifferenceInDays(nextStart, period.getStartDay()));
+                        period.setCycleLength(ExtendedCalendarViewJava.getDifferenceInDays(nextStart, period.getStartDay()));
                     }
                 }
 
@@ -105,28 +105,28 @@ public class PeriodDatabase extends SQLiteOpenHelper{
                 long days = -1;
                 String query = String.format(
                         "SELECT %s, %s FROM %s WHERE %s = (SELECT MAX(%s) FROM %s WHERE %s < %s)",
-                        DatabaseStructure.PeriodEntry._ID,
-                        DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                        DatabaseStructure.PeriodEntry.TABLE_NAME,
-                        DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                        DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                        DatabaseStructure.PeriodEntry.TABLE_NAME,
-                        DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
+                        DatabaseStructureJava.PeriodEntry._ID,
+                        DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                        DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                        DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                        DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                        DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                        DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
                         String.valueOf(period.getStartDay()));
                 Cursor c = db.rawQuery(query, null);
                 if (c.getCount() > 0) {
                     c.moveToFirst();
                     prevPeriodId = c.getLong(0);
-                    days = ExtendedCalendarView.getDifferenceInDays(period.getStartDay(), c.getLong(1));
+                    days = ExtendedCalendarViewJava.getDifferenceInDays(period.getStartDay(), c.getLong(1));
                 }
                 c.close();
 
 
-                    long r = db.insertOrThrow(DatabaseStructure.PeriodEntry.TABLE_NAME, null, period.toDbEntry());
+                    long r = db.insertOrThrow(DatabaseStructureJava.PeriodEntry.TABLE_NAME, null, period.toDbEntry());
                     if (prevPeriodId != -1) {
                         ContentValues v = new ContentValues();
-                        v.put(DatabaseStructure.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH, days);
-                        db.update(DatabaseStructure.PeriodEntry.TABLE_NAME, v, "_id = ?", new String[]{String.valueOf(prevPeriodId)});
+                        v.put(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH, days);
+                        db.update(DatabaseStructureJava.PeriodEntry.TABLE_NAME, v, "_id = ?", new String[]{String.valueOf(prevPeriodId)});
                     }
                     db.setTransactionSuccessful();
 
@@ -144,7 +144,7 @@ public class PeriodDatabase extends SQLiteOpenHelper{
      * Insert a new medicine record or update if necessary
      * @param day
      */
-    public void addMed (Day day){
+    public void addMed (DayJava day){
         // Create and/or open the database for writing
         SQLiteDatabase db = getWritableDatabase();
         long id = -1;
@@ -152,9 +152,9 @@ public class PeriodDatabase extends SQLiteOpenHelper{
         // Check if this day already exists in the db
         String query = String.format(
                 "SELECT %s FROM %s WHERE %s = %s",
-                DatabaseStructure.MedEntry._ID,
-                DatabaseStructure.MedEntry.TABLE_NAME,
-                DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC,
+                DatabaseStructureJava.MedEntry._ID,
+                DatabaseStructureJava.MedEntry.TABLE_NAME,
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC,
                 String.valueOf(day.getDayUTC()));
 
         Cursor c = db.rawQuery(query, null);
@@ -167,13 +167,13 @@ public class PeriodDatabase extends SQLiteOpenHelper{
         db.beginTransaction();
         try {
             if(id == -1) {
-                long m = db.insertOrThrow(DatabaseStructure.MedEntry.TABLE_NAME, null, day.getMedicineDbEntry());
+                long m = db.insertOrThrow(DatabaseStructureJava.MedEntry.TABLE_NAME, null, day.getMedicineDbEntry());
                 if(BuildConfig.DEBUG) {
                     Log.d(TAG, String.format("add med medId=%d: pId=%d", m, day.getPeriodId()));
                 }
             }
             else{
-                int r = db.update(DatabaseStructure.MedEntry.TABLE_NAME, day.getMedicineDbEntry(), "_id = ?", new String[]{String.valueOf(id)});
+                int r = db.update(DatabaseStructureJava.MedEntry.TABLE_NAME, day.getMedicineDbEntry(), "_id = ?", new String[]{String.valueOf(id)});
                 if(BuildConfig.DEBUG) {
                     Log.d(TAG, String.format("add med #row=%d, medId=%d", r, id));
                 }
@@ -193,7 +193,7 @@ public class PeriodDatabase extends SQLiteOpenHelper{
      * Delete a period from the database
      * @param period
      */
-    public void deletePeriod(Period period){
+    public void deletePeriod(PeriodJava period){
         // Create and/or open the database for writing
         SQLiteDatabase db = getWritableDatabase();
 
@@ -203,8 +203,8 @@ public class PeriodDatabase extends SQLiteOpenHelper{
         try {
             long id = searchPeriodId(period);
             if( id != -1 ) {
-                int p = db.delete(DatabaseStructure.PeriodEntry.TABLE_NAME, "_id = ?", new String[]{String.valueOf(id)});
-                int m = db.delete(DatabaseStructure.MedEntry.TABLE_NAME, DatabaseStructure.MedEntry.COLUMN_NAME_PERIOD_ID + " = ?", new String[]{String.valueOf(id)});
+                int p = db.delete(DatabaseStructureJava.PeriodEntry.TABLE_NAME, "_id = ?", new String[]{String.valueOf(id)});
+                int m = db.delete(DatabaseStructureJava.MedEntry.TABLE_NAME, DatabaseStructureJava.MedEntry.COLUMN_NAME_PERIOD_ID + " = ?", new String[]{String.valueOf(id)});
                 db.setTransactionSuccessful();
             }
         } catch (Exception e) {
@@ -221,7 +221,7 @@ public class PeriodDatabase extends SQLiteOpenHelper{
      * @param old
      * @param updated
      */
-    public void updatePeriod(Period old, Period updated){
+    public void updatePeriod(PeriodJava old, PeriodJava updated){
         long id = searchPeriodId(old);
         if( id != -1 ) {
             // Create and/or open the database for writing
@@ -239,13 +239,13 @@ public class PeriodDatabase extends SQLiteOpenHelper{
                     // offset between the changes
                     // positive = old > updated -> current cycle longer, previous shorter
                     // negative = old < updated -> current cycle shorter, previous longer
-                    long offset = ExtendedCalendarView.getDifferenceInDays(old.getStartDay(), updated.getStartDay());
+                    long offset = ExtendedCalendarViewJava.getDifferenceInDays(old.getStartDay(), updated.getStartDay());
 
                     // in case is the last period inserted, the current cycle length is a guess, so must remain the same
                     String query = String.format(
                             "SELECT MAX(%s) FROM %s",
-                            DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                            DatabaseStructure.PeriodEntry.TABLE_NAME);
+                            DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                            DatabaseStructureJava.PeriodEntry.TABLE_NAME);
                     Cursor c = db.rawQuery(query, null);
                     if (c.moveToFirst()) {
                         if(c.getLong(0) != old.getStartDay()){
@@ -262,13 +262,13 @@ public class PeriodDatabase extends SQLiteOpenHelper{
                     // get the value of the PREVIOUS
                     query = String.format(
                             "SELECT %s, %s FROM %s WHERE %s = (SELECT MAX(%s) FROM %s WHERE %s < %s)",
-                            DatabaseStructure.PeriodEntry._ID,
-                            DatabaseStructure.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH,
-                            DatabaseStructure.PeriodEntry.TABLE_NAME,
-                            DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                            DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                            DatabaseStructure.PeriodEntry.TABLE_NAME,
-                            DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
+                            DatabaseStructureJava.PeriodEntry._ID,
+                            DatabaseStructureJava.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH,
+                            DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                            DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                            DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                            DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                            DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
                             String.valueOf(old.getStartDay()));
                     c = db.rawQuery(query, null);
                     if (c.moveToFirst()) {
@@ -279,18 +279,18 @@ public class PeriodDatabase extends SQLiteOpenHelper{
                     c.close();
                 }
 
-                db.update(DatabaseStructure.PeriodEntry.TABLE_NAME, updated.toDbEntry(), "_id = ?", new String[]{String.valueOf(id)});
+                db.update(DatabaseStructureJava.PeriodEntry.TABLE_NAME, updated.toDbEntry(), "_id = ?", new String[]{String.valueOf(id)});
                 if (prevPeriodId != -1) {
                     ContentValues v = new ContentValues();
-                    v.put(DatabaseStructure.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH, prevCycleLength);
-                    db.update(DatabaseStructure.PeriodEntry.TABLE_NAME, v, "_id = ?", new String[]{String.valueOf(prevPeriodId)});
+                    v.put(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH, prevCycleLength);
+                    db.update(DatabaseStructureJava.PeriodEntry.TABLE_NAME, v, "_id = ?", new String[]{String.valueOf(prevPeriodId)});
                 }
 
                 // check if the meds tab needs to be updated: delete all days that are not period anymore
-                String whereClause = DatabaseStructure.MedEntry.COLUMN_NAME_PERIOD_ID + " = ? AND (" +
-                        DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC + " < ? OR " +
-                        DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC + " > ?)";
-                db.delete(DatabaseStructure.MedEntry.TABLE_NAME, whereClause,
+                String whereClause = DatabaseStructureJava.MedEntry.COLUMN_NAME_PERIOD_ID + " = ? AND (" +
+                        DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC + " < ? OR " +
+                        DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC + " > ?)";
+                db.delete(DatabaseStructureJava.MedEntry.TABLE_NAME, whereClause,
                         new String[]{String.valueOf(id), String.valueOf(updated.getStartDay()), String.valueOf(updated.getEndDay())});
 
 
@@ -310,17 +310,17 @@ public class PeriodDatabase extends SQLiteOpenHelper{
      * @param period
      * @return the id of the entry or -1 if it not exists
      */
-    public long searchPeriodId(Period period){
+    public long searchPeriodId(PeriodJava period){
         long id = -1;
         SQLiteDatabase db = getReadableDatabase();
 
         String query = String.format(
                 "SELECT %s FROM %s WHERE %s = %s AND %s = %s",
-                DatabaseStructure.PeriodEntry._ID,
-                DatabaseStructure.PeriodEntry.TABLE_NAME,
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
+                DatabaseStructureJava.PeriodEntry._ID,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
                 String.valueOf(period.getStartDay()),
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_END,
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_END,
                 String.valueOf(period.getEndDay()));
 
         Cursor c = db.rawQuery(query, null);
@@ -345,9 +345,9 @@ public class PeriodDatabase extends SQLiteOpenHelper{
 
         String query = String.format(
                 "SELECT %s FROM %s WHERE %s = %s",
-                DatabaseStructure.MedEntry.COLUMN_NAME_QUANTITY,
-                DatabaseStructure.MedEntry.TABLE_NAME,
-                DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC,
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_QUANTITY,
+                DatabaseStructureJava.MedEntry.TABLE_NAME,
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC,
                 String.valueOf(day));
 
         Cursor c = db.rawQuery(query, null);
@@ -362,7 +362,7 @@ public class PeriodDatabase extends SQLiteOpenHelper{
      * @param day
      * @return the id of the period or -1 if the day does not belong to any period
      */
-    public long isPeriod(Day day){
+    public long isPeriod(DayJava day){
         long id = -1;
         SQLiteDatabase db = getReadableDatabase();
 
@@ -370,12 +370,12 @@ public class PeriodDatabase extends SQLiteOpenHelper{
 
         String query = String.format(
                 "SELECT %s FROM %s WHERE %s >= %s AND %s <= %s",
-                DatabaseStructure.PeriodEntry._ID,
-                DatabaseStructure.PeriodEntry.TABLE_NAME,
+                DatabaseStructureJava.PeriodEntry._ID,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME,
                 date,
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
                 date,
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_END);
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_END);
 
         Cursor c = db.rawQuery(query, null);
         if(c.moveToFirst()) {
@@ -390,22 +390,22 @@ public class PeriodDatabase extends SQLiteOpenHelper{
      * @param id
      * @return the period object or null
      */
-    public Period getPeriod(long id){
-        Period p = null;
+    public PeriodJava getPeriod(long id){
+        PeriodJava p = null;
 
         SQLiteDatabase db = getReadableDatabase();
 
         String query = String.format(
                 "SELECT * FROM %s WHERE _id = %s",
-                DatabaseStructure.PeriodEntry.TABLE_NAME,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME,
                 id);
 
         Cursor c = db.rawQuery(query, null);
         if(c.moveToFirst()) {
-            p = new Period(c.getLong(c.getColumnIndex(DatabaseStructure.PeriodEntry.COLUMN_NAME_START)),
-                    c.getLong(c.getColumnIndex(DatabaseStructure.PeriodEntry.COLUMN_NAME_END)),
-                    c.getLong(c.getColumnIndex(DatabaseStructure.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH)),
-                    c.getLong(c.getColumnIndex(DatabaseStructure.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH)));
+            p = new PeriodJava(c.getLong(c.getColumnIndex(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START)),
+                    c.getLong(c.getColumnIndex(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_END)),
+                    c.getLong(c.getColumnIndex(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH)),
+                    c.getLong(c.getColumnIndex(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH)));
         }
         c.close();
 
@@ -418,22 +418,22 @@ public class PeriodDatabase extends SQLiteOpenHelper{
     * @param orderBy is the ordering flag (ASC or DESC)
     * @return the list with all the periods or null if no period was found
     * */
-    public List<Period> getAllPeriods(String orderBy){
-        List<Period> list = null;
+    public List<PeriodJava> getAllPeriods(String orderBy){
+        List<PeriodJava> list = null;
 
         String query = String.format("SELECT * FROM %s ORDER BY %s %s",
-                DatabaseStructure.PeriodEntry.TABLE_NAME,
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
                 orderBy);
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(query, null);
         if(c.moveToFirst()){
             list = new ArrayList<>(c.getCount());
             do{
-                Period p = new Period(c.getLong(c.getColumnIndex(DatabaseStructure.PeriodEntry.COLUMN_NAME_START)),
-                        c.getLong(c.getColumnIndex(DatabaseStructure.PeriodEntry.COLUMN_NAME_END)),
-                        c.getLong(c.getColumnIndex(DatabaseStructure.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH)),
-                        c.getLong(c.getColumnIndex(DatabaseStructure.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH)));
+                PeriodJava p = new PeriodJava(c.getLong(c.getColumnIndex(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START)),
+                        c.getLong(c.getColumnIndex(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_END)),
+                        c.getLong(c.getColumnIndex(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH)),
+                        c.getLong(c.getColumnIndex(DatabaseStructureJava.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH)));
                 list.add(p);
             }while(c.moveToNext());
         }
@@ -445,39 +445,39 @@ public class PeriodDatabase extends SQLiteOpenHelper{
      * Get all medicine from the db
      * @return the list with the data or null if no med was found
      * */
-    public List<Med> getAllMeds(){
-        List<Med> list = null;
+    public List<MedJava> getAllMeds(){
+        List<MedJava> list = null;
 
         // Select all period with medical records
         String query = String.format("SELECT %s, %s, %s  FROM %s WHERE %s IN(SELECT %s FROM %s) ORDER BY %s ASC",
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH,
-                DatabaseStructure.PeriodEntry._ID,
-                DatabaseStructure.PeriodEntry.TABLE_NAME,
-                DatabaseStructure.PeriodEntry._ID,
-                DatabaseStructure.MedEntry.COLUMN_NAME_PERIOD_ID,
-                DatabaseStructure.MedEntry.TABLE_NAME,
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_START);
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH,
+                DatabaseStructureJava.PeriodEntry._ID,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                DatabaseStructureJava.PeriodEntry._ID,
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_PERIOD_ID,
+                DatabaseStructureJava.MedEntry.TABLE_NAME,
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START);
         SQLiteDatabase db = getReadableDatabase();
         Cursor p = db.rawQuery(query, null);
         if(p.moveToFirst()){
             list = new ArrayList<>(p.getCount());
             do{
-                Med med = new Med(p.getLong(0), p.getInt(1));
+                MedJava med = new MedJava(p.getLong(0), p.getInt(1));
 
                 // select all medical record for the specified period
                 query = String.format("SELECT %s, %s FROM %s WHERE %s = %s",
-                        DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC,
-                        DatabaseStructure.MedEntry.COLUMN_NAME_QUANTITY,
-                        DatabaseStructure.MedEntry.TABLE_NAME,
-                        DatabaseStructure.MedEntry.COLUMN_NAME_PERIOD_ID,
+                        DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC,
+                        DatabaseStructureJava.MedEntry.COLUMN_NAME_QUANTITY,
+                        DatabaseStructureJava.MedEntry.TABLE_NAME,
+                        DatabaseStructureJava.MedEntry.COLUMN_NAME_PERIOD_ID,
                         p.getLong(2));
                 Cursor m = db.rawQuery(query, null);
                 if(m.getCount() > 0){
                     m.moveToFirst();
                     do{
                         // day_of_medicine - first_day_of_period = day_in_period
-                        long d = ExtendedCalendarView.getDifferenceInDays(m.getLong(0), med.getDate());
+                        long d = ExtendedCalendarViewJava.getDifferenceInDays(m.getLong(0), med.getDate());
                         med.setDay((int)d, m.getInt(1));
                     }while (m.moveToNext());
                 }
@@ -496,11 +496,11 @@ public class PeriodDatabase extends SQLiteOpenHelper{
         int l = 0;
         // Select all period with medical records
         String query = String.format("SELECT MAX(%s) FROM %s WHERE %s IN(SELECT %s FROM %s)",
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH,
-                DatabaseStructure.PeriodEntry.TABLE_NAME,
-                DatabaseStructure.PeriodEntry._ID,
-                DatabaseStructure.MedEntry.COLUMN_NAME_PERIOD_ID,
-                DatabaseStructure.MedEntry.TABLE_NAME);
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                DatabaseStructureJava.PeriodEntry._ID,
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_PERIOD_ID,
+                DatabaseStructureJava.MedEntry.TABLE_NAME);
         SQLiteDatabase db = getReadableDatabase();
         Cursor p = db.rawQuery(query, null);
         if(p.moveToFirst()){
@@ -514,8 +514,8 @@ public class PeriodDatabase extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
-            db.delete(DatabaseStructure.PeriodEntry.TABLE_NAME, null, null);
-            db.delete(DatabaseStructure.MedEntry.TABLE_NAME, null, null);
+            db.delete(DatabaseStructureJava.PeriodEntry.TABLE_NAME, null, null);
+            db.delete(DatabaseStructureJava.MedEntry.TABLE_NAME, null, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {
             if(BuildConfig.DEBUG) {
@@ -533,8 +533,8 @@ public class PeriodDatabase extends SQLiteOpenHelper{
     public long getLastPeriod(){
         long last = 0;
         String query = String.format("SELECT MAX(%s) FROM %s",
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_START,
-                DatabaseStructure.PeriodEntry.TABLE_NAME);
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME);
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(query, null);
         if(c.moveToFirst()){
@@ -581,8 +581,8 @@ public class PeriodDatabase extends SQLiteOpenHelper{
     public int getPeriodLengthAvg(){
         int retval = 0;
         String query = String.format("SELECT AVG(%s) FROM %s",
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH,
-                DatabaseStructure.PeriodEntry.TABLE_NAME);
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_PERIOD_LENGTH,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME);
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(query, null);
         if (c.moveToFirst()) {
@@ -599,9 +599,9 @@ public class PeriodDatabase extends SQLiteOpenHelper{
     public int getCycleLengthAvg(){
         int retval = 0;
         String query = String.format("SELECT AVG(%s) FROM %s WHERE %s > 0",
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH,
-                DatabaseStructure.PeriodEntry.TABLE_NAME,
-                DatabaseStructure.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH);
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH,
+                DatabaseStructureJava.PeriodEntry.TABLE_NAME,
+                DatabaseStructureJava.PeriodEntry.COLUMN_NAME_CYCLE_LENGTH);
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(query, null);
         if (c.moveToFirst()) {
@@ -613,14 +613,14 @@ public class PeriodDatabase extends SQLiteOpenHelper{
         return retval;
     }
 
-    public void deleteMed(Day day) {
+    public void deleteMed(DayJava day) {
         SQLiteDatabase db = getWritableDatabase();
         long id = -1;
         String query = String.format(
                 "SELECT %s FROM %s WHERE %s = %s",
-                DatabaseStructure.MedEntry._ID,
-                DatabaseStructure.MedEntry.TABLE_NAME,
-                DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC,
+                DatabaseStructureJava.MedEntry._ID,
+                DatabaseStructureJava.MedEntry.TABLE_NAME,
+                DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC,
                 String.valueOf(day.getDayUTC()));
 
         Cursor c = db.rawQuery(query, null);
@@ -633,7 +633,7 @@ public class PeriodDatabase extends SQLiteOpenHelper{
         db.beginTransaction();
         try {
             if( id != -1 ) {
-                db.delete(DatabaseStructure.MedEntry.TABLE_NAME, "_id = ?", new String[]{String.valueOf(id)});
+                db.delete(DatabaseStructureJava.MedEntry.TABLE_NAME, "_id = ?", new String[]{String.valueOf(id)});
                 db.setTransactionSuccessful();
             }
         } catch (Exception e) {
@@ -653,9 +653,9 @@ public class PeriodDatabase extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try{
-            int p = db.delete(DatabaseStructure.PeriodEntry.TABLE_NAME, DatabaseStructure.PeriodEntry.COLUMN_NAME_START + " <= ?",
+            int p = db.delete(DatabaseStructureJava.PeriodEntry.TABLE_NAME, DatabaseStructureJava.PeriodEntry.COLUMN_NAME_START + " <= ?",
                     new String[]{String.valueOf(limit)});
-            int m = db.delete(DatabaseStructure.MedEntry.TABLE_NAME, DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC + " <= ?",
+            int m = db.delete(DatabaseStructureJava.MedEntry.TABLE_NAME, DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC + " <= ?",
                     new String[]{String.valueOf(limit)});
             db.setTransactionSuccessful();
         }catch (Exception e) {

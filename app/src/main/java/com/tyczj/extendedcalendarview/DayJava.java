@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 
 import java.util.Calendar;
 
-public class Day{
+public class DayJava{
 
     private int day;
     private int year;
@@ -18,7 +18,7 @@ public class Day{
     private int meds;
     private boolean is_expected;
 
-	public Day(Context context, int year, int month, int day){
+	public DayJava(Context context, int year, int month, int day){
         this.day = day;
         this.month = month;
         this.year = year;
@@ -56,9 +56,9 @@ public class Day{
 
     ContentValues getMedicineDbEntry(){
         ContentValues values = new ContentValues();
-        values.put(DatabaseStructure.MedEntry.COLUMN_NAME_DAY_UTC, getDayUTC());
-        values.put(DatabaseStructure.MedEntry.COLUMN_NAME_PERIOD_ID, period_id);
-        values.put(DatabaseStructure.MedEntry.COLUMN_NAME_QUANTITY, meds);
+        values.put(DatabaseStructureJava.MedEntry.COLUMN_NAME_DAY_UTC, getDayUTC());
+        values.put(DatabaseStructureJava.MedEntry.COLUMN_NAME_PERIOD_ID, period_id);
+        values.put(DatabaseStructureJava.MedEntry.COLUMN_NAME_QUANTITY, meds);
         return values;
     }
 
@@ -77,11 +77,11 @@ public class Day{
 		this.adapter = adapter;
 	}
 	
-	private class GetPeriod extends AsyncTask<Day,Void,Void>{
+	private class GetPeriod extends AsyncTask<DayJava,Void,Void>{
 
 		@Override
-		protected Void doInBackground(Day... params) {
-            PeriodDatabase db = PeriodDatabase.getInstance(context);
+		protected Void doInBackground(DayJava... params) {
+            PeriodDatabaseJava db = PeriodDatabaseJava.getInstance(context);
             // Mark if it's a period day
             period_id = db.isPeriod(params[0]);
 

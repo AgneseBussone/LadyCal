@@ -11,7 +11,7 @@ import android.util.TypedValue;
  * Utility class used to group operation performed around the app
  */
 
-public class UtilityClass {
+public class UtilityClassJava {
 
     // Get color based on the theme
     @ColorInt

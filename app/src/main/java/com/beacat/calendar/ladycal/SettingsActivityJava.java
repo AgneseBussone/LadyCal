@@ -20,7 +20,7 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 /**
  * Activity for setting the preferences
  */
-public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivityJava extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private String fragment_tag = "setting_fragment";
 
@@ -128,7 +128,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 onBackPressed();
                 return true;
             case R.id.resetAll:
-                AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivity.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivityJava.this).create();
                 alertDialog.setTitle(R.string.dialog_reset_pref);
 
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
@@ -171,13 +171,13 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     @Override
     protected void onResume() {
         super.onResume();
-        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).registerOnSharedPreferenceChangeListener(this);
+        PreferenceManager.getDefaultSharedPreferences(SettingsActivityJava.this).registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this)
+        PreferenceManager.getDefaultSharedPreferences(SettingsActivityJava.this)
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
@@ -185,7 +185,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.equals(getString(R.string.KEY_THEME))){
             final String color = sharedPreferences.getString(key, getString(R.string.pref_theme_default));
-            AlertDialog dialog = new AlertDialog.Builder(SettingsActivity.this).create();
+            AlertDialog dialog = new AlertDialog.Builder(SettingsActivityJava.this).create();
             dialog.setTitle("Restart required");
             dialog.setMessage(getString(R.string.restart_message, color));
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -202,7 +202,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                         enablePurple();
 
                     // Restart the app
-                    Toast.makeText(SettingsActivity.this, "Restarting app.....", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivityJava.this, "Restarting app.....", Toast.LENGTH_SHORT).show();
                     Intent i = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage(getPackageName());
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

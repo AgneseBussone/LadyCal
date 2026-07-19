@@ -11,11 +11,11 @@ import com.tyczj.extendedcalendarview.PeriodDatabase;
  * It takes two Period objects as input: the first that contains the old values and the second with the new values
  */
 
-public class EditPeriodTask extends AsyncTask<Period, Void, Void> { //params, progress, result
+public class EditPeriodTaskJava extends AsyncTask<Period, Void, Void> { //params, progress, result
 
     private Context context; // needed to insert the new entry into the db
 
-    public EditPeriodTask(Context context) {
+    public EditPeriodTaskJava(Context context) {
         super();
         this.context = context;
     }

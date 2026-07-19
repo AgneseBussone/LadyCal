@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 @SuppressWarnings("WrongConstant")
-class CalendarAdapter extends BaseAdapter{
+class CalendarAdapterJava extends BaseAdapter{
 
     // private final String TAG = this.getClass().getSimpleName();
 
@@ -31,13 +31,13 @@ class CalendarAdapter extends BaseAdapter{
     // Variable used to create the grid of the days
 	private int firstDayOfWeek = 1;  // sunday
 
-    private Day today = null;
+    private DayJava today = null;
 
     private Context context;
-    private ArrayList<Day> dayList = new ArrayList<>(NUM_CELLS);
+    private ArrayList<DayJava> dayList = new ArrayList<>(NUM_CELLS);
     private Calendar cal; //Calendar object coming from ExtendedCalendarView
 
-	CalendarAdapter(Context context, Calendar cal){
+	CalendarAdapterJava(Context context, Calendar cal){
 		this.cal = cal;
 		this.context = context;
         this.cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -127,7 +127,7 @@ class CalendarAdapter extends BaseAdapter{
                 ImageView day_frame = (ImageView) v.findViewById(R.id.day_frame);
                 Calendar current_calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
 
-                Day day = dayList.get(day_index);
+                DayJava day = dayList.get(day_index);
 
                 boolean isToday = (day.getYear() == current_calendar.get(Calendar.YEAR)) &&
                         (day.getMonth() == current_calendar.get(Calendar.MONTH)) &&
@@ -201,19 +201,19 @@ class CalendarAdapter extends BaseAdapter{
         if(firstDay == Calendar.SUNDAY && firstDayOfWeek == Calendar.MONDAY){
             // special case
             for (int i = 0; i < 6; i++) {
-                Day d = new Day(context, 0, 0, 0);
+                DayJava d = new DayJava(context, 0, 0, 0);
                 dayList.add(d);
             }
         }
         else {
             for (int i = 0; i < (firstDay - firstDayOfWeek); i++) {
-                Day d = new Day(context, 0, 0, 0);
+                DayJava d = new DayJava(context, 0, 0, 0);
                 dayList.add(d);
             }
         }
         // populate days of the month
         for(int dayNumber = 1; dayNumber <= numDayInMonth; dayNumber++) {
-        	Day d = new Day(context, year, month, dayNumber);
+        	DayJava d = new DayJava(context, year, month, dayNumber);
         	d.setAdapter(this);
         	d.loadDay(); // Read the information from the db
             dayList.add(d);
@@ -221,7 +221,7 @@ class CalendarAdapter extends BaseAdapter{
 
         // populate empty cells after the last day
         for(int i = dayList.size(); i < NUM_CELLS; i++){
-            Day d = new Day(context, 0, 0, 0);
+            DayJava d = new DayJava(context, 0, 0, 0);
             dayList.add(d);
         }
 
@@ -234,7 +234,7 @@ class CalendarAdapter extends BaseAdapter{
      * If the current month is after the last period, we need to calculate the expected
      */
     private void calculateExpected(int showedMonth, int showedYear, int lastDay){
-        PeriodDatabase db = PeriodDatabase.getInstance(context);
+        PeriodDatabaseJava db = PeriodDatabaseJava.getInstance(context);
         Calendar c = Calendar.getInstance();
 
         c.set(showedYear, showedMonth, 1);
@@ -261,7 +261,7 @@ class CalendarAdapter extends BaseAdapter{
                 if ((startExpected >= firstDayOfTheMonth && startExpected <= lastDayOfTheMonth) ||      // starts this month
                         (endExpected >= firstDayOfTheMonth && endExpected <= lastDayOfTheMonth)) {      // ends this month
                     // mark these days as expected
-                    for(Day d : dayList){
+                    for(DayJava d : dayList){
                         long utc = d.getDayUTC();
                         if(utc >= startExpected && utc < endExpected)
                             d.setIsExpected(true);
@@ -273,5 +273,5 @@ class CalendarAdapter extends BaseAdapter{
         }
     }
 
-    public Day getToday(){ return today; }
+    public DayJava getToday(){ return today; }
 }

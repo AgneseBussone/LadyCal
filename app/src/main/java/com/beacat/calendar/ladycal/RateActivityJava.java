@@ -21,7 +21,7 @@ import static com.beacat.calendar.ladycal.R.style.AppTheme;
  * Activity that handles rating.
  */
 
-public class RateActivity extends AppCompatActivity {
+public class RateActivityJava extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,21 +4,21 @@ import android.content.Context;
 import android.os.AsyncTask;
 import androidx.appcompat.app.ActionBar;
 
-import com.tyczj.extendedcalendarview.Day;
-import com.tyczj.extendedcalendarview.ExtendedCalendarView;
-import com.tyczj.extendedcalendarview.PeriodDatabase;
+import com.tyczj.extendedcalendarview.DayJava;
+import com.tyczj.extendedcalendarview.ExtendedCalendarViewJava;
+import com.tyczj.extendedcalendarview.PeriodDatabaseJava;
 
 /**
  * Task to update the messages in the main view.
  */
 
-public class SetMessagesTask extends AsyncTask<Void, Void, String> { //params, progress, result
+public class SetMessagesTaskJava extends AsyncTask<Void, Void, String> { //params, progress, result
 
     private Context context; // needed to insert the new entry into the db
-    private Day today;
+    private DayJava today;
     private ActionBar bar;
 
-    public SetMessagesTask(Context context, ActionBar bar, Day today){
+    public SetMessagesTaskJava(Context context, ActionBar bar, DayJava today){
         this.context = context;
         this.bar = bar;
         this.today = today;
@@ -31,12 +31,12 @@ public class SetMessagesTask extends AsyncTask<Void, Void, String> { //params, p
 
     @Override
     protected String doInBackground(Void... params) {
-        PeriodDatabase db = PeriodDatabase.getInstance(context);
+        PeriodDatabaseJava db = PeriodDatabaseJava.getInstance(context);
         String mex = "";
 
         long start = db.getLastPeriod();
         if(start != 0) {
-            long offset = ExtendedCalendarView.getDifferenceInDays(today.getDayUTC(), start);
+            long offset = ExtendedCalendarViewJava.getDifferenceInDays(today.getDayUTC(), start);
 
             if(today.isPeriod()) {
                 offset++;

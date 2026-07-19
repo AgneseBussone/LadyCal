@@ -3,30 +3,30 @@ package com.beacat.calendar.ladycal;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.tyczj.extendedcalendarview.Day;
-import com.tyczj.extendedcalendarview.ExtendedCalendarView;
-import com.tyczj.extendedcalendarview.PeriodDatabase;
+import com.tyczj.extendedcalendarview.DayJava;
+import com.tyczj.extendedcalendarview.ExtendedCalendarViewJava;
+import com.tyczj.extendedcalendarview.PeriodDatabaseJava;
 
 /**
  * Task that adds a med record.
  * Takes as input the day; the med field must be filled by the caller.
  */
 
-public class AddMedTask extends AsyncTask<Day, Void, Void> { //params, progress, result
+public class AddMedTaskJava extends AsyncTask<DayJava, Void, Void> { //params, progress, result
 
     private Context context; // needed to insert the new entry into the db
-    private ExtendedCalendarView calendarView; //needed to refresh the view after the insertion of new period from the main view
+    private ExtendedCalendarViewJava calendarView; //needed to refresh the view after the insertion of new period from the main view
 
-    public AddMedTask(Context context, ExtendedCalendarView calendarView) {
+    public AddMedTaskJava(Context context, ExtendedCalendarViewJava calendarView) {
         super();
         this.context = context;
         this.calendarView = calendarView;
     }
 
     @Override
-    protected Void doInBackground(Day... params) {
+    protected Void doInBackground(DayJava... params) {
 
-        PeriodDatabase db = PeriodDatabase.getInstance(context);
+        PeriodDatabaseJava db = PeriodDatabaseJava.getInstance(context);
 
         if(params[0].getMeds() > 0 ) {
             db.addMed(params[0]);

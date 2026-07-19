@@ -9,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
  * No fixed time requested, I don't want to waste user's time.
  */
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivityJava extends AppCompatActivity {
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // No need to setup a view, because it comes from the theme
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivityJava.class);
 
         startActivity(intent);
 

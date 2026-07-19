@@ -41,7 +41,7 @@ import static com.beacat.calendar.ladycal.R.style.AppTheme;
  * It shows also all the periods already into the db.
  */
 
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivityJava extends AppCompatActivity {
 
     private ListView listView;
     private List<Period> entries;
@@ -87,7 +87,7 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void result) {
                 if(entries != null) {
-                    adapter = new MyArrayAdapter(HistoryActivity.this, entries);
+                    adapter = new MyArrayAdapter(HistoryActivityJava.this, entries);
                     listView.setAdapter(adapter);
                 }
                 // hide the spinner
@@ -110,13 +110,13 @@ public class HistoryActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch(id) {
             case  R.id.deleteAll:
-                AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivity.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivityJava.this).create();
                 alertDialog.setTitle(R.string.dialog_delete_all_period);
 
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                new DeleteAllPeriodsTask(HistoryActivity.this).execute();
+                                new DeleteAllPeriodsTaskJava(HistoryActivityJava.this).execute();
                                 entries.clear();
                                 adapter.notifyDataSetChanged();
                                 dialog.dismiss();
@@ -144,7 +144,7 @@ public class HistoryActivity extends AppCompatActivity {
      * @param view
      */
     public void addPeriod(View view) {
-        AlertDialog.Builder builder= new AlertDialog.Builder(HistoryActivity.this);
+        AlertDialog.Builder builder= new AlertDialog.Builder(HistoryActivityJava.this);
         final View dialogView = getLayoutInflater().inflate(R.layout.add_period, null);
         builder.setView(dialogView);
 
@@ -168,7 +168,7 @@ public class HistoryActivity extends AppCompatActivity {
                 Day endDay = new Day(null, end.getYear(), end.getMonth(), end.getDayOfMonth());
 
                 if(startDay.getDayUTC() <= endDay.getDayUTC()) {
-                    new AddPeriodTask(HistoryActivity.this, null).execute(startDay, endDay);
+                    new AddPeriodTask(HistoryActivityJava.this, null).execute(startDay, endDay);
 
                     // It is an insertion at the end of the list, I don't care about sorting
                     // because the next time the user call the activity the list will be sorted
@@ -178,7 +178,7 @@ public class HistoryActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
                 else{
-                    Toast.makeText(HistoryActivity.this, "Error: start day after end day", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HistoryActivityJava.this, "Error: start day after end day", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -230,22 +230,22 @@ public class HistoryActivity extends AppCompatActivity {
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(item.getStartDay());
             period.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(cal.getTime()));
-            period.setTextColor(UtilityClass.getPeriodListPrimaryTextColor(HistoryActivity.this));
+            period.setTextColor(UtilityClass.getPeriodListPrimaryTextColor(HistoryActivityJava.this));
             long days = ExtendedCalendarView.getDifferenceInDays(item.getEndDay(), item.getStartDay()) + 1;
             length.setText("Length: " + days);
-            length.setTextColor(UtilityClass.getPeriodListSecondaryTextColor(HistoryActivity.this));
+            length.setTextColor(UtilityClass.getPeriodListSecondaryTextColor(HistoryActivityJava.this));
 
             /* Delete button */
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivity.this).create();
+                    AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivityJava.this).create();
                     alertDialog.setTitle(R.string.dialog_delete_period);
 
                     alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new DeletePeriodTask(HistoryActivity.this).execute(item);
+                                    new DeletePeriodTaskJava(HistoryActivityJava.this).execute(item);
                                     data.remove(position);
                                     notifyDataSetChanged();
                                     dialog.dismiss();
@@ -265,7 +265,7 @@ public class HistoryActivity extends AppCompatActivity {
             editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivityJava.this);
                     final View dialogView = getLayoutInflater().inflate(R.layout.add_period, null);
                     builder.setView(dialogView);
 
@@ -300,7 +300,7 @@ public class HistoryActivity extends AppCompatActivity {
                                         ExtendedCalendarView.getDifferenceInDays(endDay.getDayUTC(), startDay.getDayUTC()) +1,
                                         item.getCycleLength());
 
-                                new EditPeriodTask(HistoryActivity.this).execute(item, new_period);
+                                new EditPeriodTaskJava(HistoryActivityJava.this).execute(item, new_period);
 
                                 data.remove(position);
                                 data.add(position, new_period);
@@ -310,7 +310,7 @@ public class HistoryActivity extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                             else{
-                                Toast.makeText(HistoryActivity.this, "Error: start day after end day", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HistoryActivityJava.this, "Error: start day after end day", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -321,14 +321,14 @@ public class HistoryActivity extends AppCompatActivity {
             medBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivity.this).create();
+                    AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivityJava.this).create();
                     alertDialog.setTitle(R.string.dialog_edit_medicine);
 
                     alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent resultIntent = new Intent();
-                                    resultIntent.putExtra(MainActivity.CHANGE_MEDS_STRING_ID, item.getStartDay());
+                                    resultIntent.putExtra(MainActivityJava.CHANGE_MEDS_STRING_ID, item.getStartDay());
                                     setResult(Activity.RESULT_OK, resultIntent);
 
                                     dialog.dismiss();

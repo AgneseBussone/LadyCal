@@ -4,13 +4,13 @@ package com.tyczj.extendedcalendarview;
  * Class used to carry the information needed by the medicine chart.
  */
 
-public class Med {
+public class MedJava {
     private long date;              // UTC for the first day
     private int quantity;           // total of meds taken
     private float[] meds;           // how many meds taken per day meds[0] = 5 -> first day, 5 meds
 
 
-    public Med(long date, int period_length){
+    public MedJava(long date, int period_length){
         this.date = date;
         meds = new float[period_length];
         this.quantity = 0;

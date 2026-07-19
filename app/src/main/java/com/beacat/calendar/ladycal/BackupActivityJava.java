@@ -15,7 +15,7 @@ import static com.beacat.calendar.ladycal.R.style.AppTheme;
  * because the app relies on the auto backup of Android.
  */
 
-public class BackupActivity extends AppCompatActivity {
+public class BackupActivityJava extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

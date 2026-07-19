@@ -11,7 +11,7 @@ import android.widget.ViewFlipper;
  * Activity that shows a one time tutorial with the base functionality of the app
  */
 
-public class TutorialActivity extends AppCompatActivity implements View.OnClickListener {
+public class TutorialActivityJava extends AppCompatActivity implements View.OnClickListener {
 
     private ViewFlipper flipper;
     Button btn;

@@ -37,7 +37,7 @@ import static com.beacat.calendar.ladycal.Reminder.END_CHANNEL_ID;
 import static com.beacat.calendar.ladycal.Reminder.FRIENDLY_CHANNEL_ID;
 import static com.beacat.calendar.ladycal.Reminder.START_CHANNEL_ID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityJava extends AppCompatActivity {
 
     // constant required to retrieve data in case the user wants to insert meds data from history activity
     public static final int CHANGE_MEDS_CODE = 1;
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             count--;
             if(count == 0){
                 // ask
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivityJava.this).create();
                 alertDialog.setTitle("Do you like this app?");
                 alertDialog.setMessage("If so, live a rate");
                 DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (which){
                             case AlertDialog.BUTTON_POSITIVE:
                                 // open the rate activity
-                                Intent i = new Intent(MainActivity.this, RateActivity.class);
+                                Intent i = new Intent(MainActivityJava.this, RateActivity.class);
                                 startActivity(i);
                                 // fallthrough
                             case AlertDialog.BUTTON_NEGATIVE:
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                     // remove the listener or it will be called every time the view is drawn
                     calendar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     // start the async task
-                    SetMessagesTask task = new SetMessagesTask(MainActivity.this, bar, calendar.getToday());
+                    SetMessagesTask task = new SetMessagesTask(MainActivityJava.this, bar, calendar.getToday());
                     task.execute();
                 }
             });
@@ -241,10 +241,10 @@ public class MainActivity extends AppCompatActivity {
     private void fireTestNotification() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, 5);
-        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivity.this),
+        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivityJava.this),
                 calendar.getTimeInMillis(),
                 Reminder.NOTIFICATION_CODE_FRIENDLY,
-                MainActivity.this);
+                MainActivityJava.this);
     }
 
     @Override
@@ -258,32 +258,32 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_history: {
-                Intent intent = new Intent(this, HistoryActivity.class);
+                Intent intent = new Intent(this, HistoryActivityJava.class);
                 intent.putExtra(getString(KEY_THEME), themeId);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivityJava.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivityForResult(intent, CHANGE_MEDS_CODE, bundle);
                 return true;
             }
             case R.id.settings: {
-                Intent i = new Intent(this, SettingsActivity.class);
+                Intent i = new Intent(this, SettingsActivityJava.class);
                 i.putExtra(getString(KEY_THEME), themeId);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivityJava.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
                 return true;
             }
             case R.id.statistics: {
-                Intent i = new Intent(this, StatisticsActivity.class);
+                Intent i = new Intent(this, StatisticsActivityJava.class);
                 i.putExtra(getString(KEY_THEME), themeId);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivityJava.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
                 return true;
             }
             case R.id.tutorial: {
                 Intent i = new Intent(this, TutorialActivity.class);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivityJava.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
                 return true;
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rate: {
                 Intent i = new Intent(this, RateActivity.class);
                 i.putExtra(getString(KEY_THEME), themeId);
-                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivity.this,
+                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(MainActivityJava.this,
                         android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
                 startActivity(i, bundle);
                 return true;
@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
                 // remove the listener or it will be called every time the view is drawn
                 calendar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 // start the async task
-                SetMessagesTask task = new SetMessagesTask(MainActivity.this, bar, calendar.getToday());
+                SetMessagesTask task = new SetMessagesTask(MainActivityJava.this, bar, calendar.getToday());
                 task.execute();
             }
         });
@@ -373,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void end_period(final Day day, String day_string){
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivityJava.this).create();
         alertDialog.setTitle(R.string.dialog_end_period);
 
         alertDialog.setMessage(day_string);
@@ -382,13 +382,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // check if it's not in the future
                 if(day.getDayUTC() > calendar.getToday().getDayUTC()){
-                    Toast.makeText(MainActivity.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivityJava.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
                     // get rid of the selection icon in the view
                     calendar.refreshCalendar();
                     dialog.dismiss();
                     return;
                 }
-                new EndPeriodTask(MainActivity.this, calendar).execute(day);
+                new EndPeriodTaskJava(MainActivityJava.this, calendar).execute(day);
                 dialog.dismiss();
             }
         });
@@ -404,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void start_period(final Day day, String day_string){
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivityJava.this).create();
         alertDialog.setTitle(R.string.dialog_add_period_title);
 
         alertDialog.setMessage(day_string);
@@ -416,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // check if it's not in the future
                         if(day.getDayUTC() > cal.getTimeInMillis()){
-                            Toast.makeText(MainActivity.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivityJava.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
                             // get rid of the selection icon in the view
                             calendar.refreshCalendar();
                             dialog.dismiss();
@@ -430,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
                         cal.add(Calendar.DATE, (db.getPeriodLength() - 1));
                         endDay = new Day(null, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-                        new AddPeriodTask(MainActivity.this, calendar).execute(day, endDay);
+                        new AddPeriodTask(MainActivityJava.this, calendar).execute(day, endDay);
 
                         dialog.dismiss();
 
@@ -438,10 +438,10 @@ public class MainActivity extends AppCompatActivity {
                         if(sharedPref.getBoolean(getString(R.string.KEY_PERIOD_REM), false)){
                             // cal is set to the end of the period
                             if(Calendar.getInstance().getTimeInMillis() < cal.getTimeInMillis()){
-                                Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_END, MainActivity.this),
+                                Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_END, MainActivityJava.this),
                                         cal.getTimeInMillis(),
                                         Reminder.NOTIFICATION_CODE_END,
-                                        MainActivity.this);
+                                        MainActivityJava.this);
                                 if(BuildConfig.DEBUG) {
 //                                    Log.d(TAG, "scheduled end reminder");
                                 }
@@ -498,7 +498,7 @@ public class MainActivity extends AppCompatActivity {
                     day = selectedDay;
                     // check if it's not in the future
                     if(day.getDayUTC() > cal.getTimeInMillis()){
-                        Toast.makeText(MainActivity.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivityJava.this, "Operations in the future not allowed", Toast.LENGTH_LONG).show();
                         // get rid of the selection icon in the view
                         calendar.refreshCalendar();
                         dialog.dismiss();
@@ -508,10 +508,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(day.isPeriod()) {
                     day.setMeds(n);
-                    new AddMedTask(MainActivity.this, calendar).execute(day);
+                    new AddMedTask(MainActivityJava.this, calendar).execute(day);
                 }
                 else{
-                    Toast.makeText(MainActivity.this, "You cannot set medicine for non period day", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivityJava.this, "You cannot set medicine for non period day", Toast.LENGTH_LONG).show();
                     // get rid of the selection icon in the view
                     calendar.refreshCalendar();
                 }
@@ -554,10 +554,10 @@ public class MainActivity extends AppCompatActivity {
                 c.add(Calendar.DATE, (db.getCycleLength() - 3)); // friendly reminder date
                 if (now <= c.getTimeInMillis() && friendlyRem) {
                     long date = c.getTimeInMillis();
-                    Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivity.this),
+                    Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivityJava.this),
                             date,
                             Reminder.NOTIFICATION_CODE_FRIENDLY,
-                            MainActivity.this);
+                            MainActivityJava.this);
                     saveReminderDate(Reminder.NOTIFICATION_CODE_FRIENDLY, date);
                     if(BuildConfig.DEBUG) {
 //                        Log.d(TAG, "scheduled friendly reminder");
@@ -567,10 +567,10 @@ public class MainActivity extends AppCompatActivity {
                     c.add(Calendar.DATE, 3); // start period reminder date
                     if(now <= c.getTimeInMillis()) {
                         long date = c.getTimeInMillis();
-                        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_START, MainActivity.this),
+                        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_START, MainActivityJava.this),
                                 date,
                                 Reminder.NOTIFICATION_CODE_START,
-                                MainActivity.this);
+                                MainActivityJava.this);
                         saveReminderDate(Reminder.NOTIFICATION_CODE_START, date);
                         if(BuildConfig.DEBUG) {
 //                            Log.d(TAG, "scheduled start reminder");

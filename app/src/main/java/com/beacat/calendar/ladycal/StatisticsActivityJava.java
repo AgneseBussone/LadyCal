@@ -48,7 +48,7 @@ import static com.beacat.calendar.ladycal.R.style.AppTheme;
  * Activity for showing the statistics.
  */
 
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivityJava extends AppCompatActivity {
 
     private final int ANIM_XY = 2000;
     private ActionBar bar;
@@ -211,7 +211,7 @@ public class StatisticsActivity extends AppCompatActivity {
             chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
                 @Override
                 public void onValueSelected(Entry e, Highlight h) {
-                    AlertDialog  alertDialog = new AlertDialog.Builder(StatisticsActivity.this).create();
+                    AlertDialog  alertDialog = new AlertDialog.Builder(StatisticsActivityJava.this).create();
                     alertDialog.setTitle(formatter.getFormattedValue(e.getX()));
                     String mex = "";
                     Med m = allMedsList.get((int)e.getX());

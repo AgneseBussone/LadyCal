@@ -13,12 +13,12 @@ import com.tyczj.extendedcalendarview.PeriodDatabase;
  * It takes the ending day as a parameter.
  */
 
-public class EndPeriodTask extends AsyncTask<Day, Void, Void> { //params, progress, result
+public class EndPeriodTaskJava extends AsyncTask<Day, Void, Void> { //params, progress, result
 
     private Context context; // needed to insert the new entry into the db
     private ExtendedCalendarView calendarView; //needed to refresh the view after the insertion of new period from the main view
 
-    public EndPeriodTask(Context context, ExtendedCalendarView calendarView) {
+    public EndPeriodTaskJava(Context context, ExtendedCalendarView calendarView) {
         super();
         this.context = context;
         this.calendarView = calendarView;

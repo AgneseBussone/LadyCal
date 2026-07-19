@@ -8,10 +8,10 @@ import android.provider.BaseColumns;
  * that some Android classes such as cursor adaptors will expect it to have.
  */
 
-public final class DatabaseStructure {
+public final class DatabaseStructureJava {
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.
-    private DatabaseStructure() {}
+    private DatabaseStructureJava() {}
 
     public static final String DATABASE_NAME = "PeriodDatabase.db";
     public static final int DATABASE_VERSION = 1;

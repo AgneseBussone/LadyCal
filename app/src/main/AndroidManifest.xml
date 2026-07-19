@@ -12,18 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivityJava"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".SettingsActivityJava"
             android:screenOrientation="portrait"
             android:theme="@style/PrefStyle"/>
         <activity
-            android:name=".HistoryActivity"
+            android:name=".HistoryActivityJava"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".StatisticsActivity"
+            android:name=".StatisticsActivityJava"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".BackupActivity"
