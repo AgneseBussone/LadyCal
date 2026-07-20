@@ -27,10 +27,14 @@ import com.tyczj.extendedcalendarview.Day
 import com.tyczj.extendedcalendarview.ExtendedCalendarView
 import com.tyczj.extendedcalendarview.PeriodDatabase
 
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -46,7 +50,8 @@ class MainActivity : AppCompatActivity() {
     private var gesture = 0
     private var bar: ActionBar? = null
     private lateinit var sharedPref: SharedPreferences
-    internal lateinit var db: PeriodDatabase
+    @Inject
+    lateinit var db: PeriodDatabase
     private var themeId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         // Save the default values for preferences only the first time the application is open
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        db = PeriodDatabase.getInstance(applicationContext)
 
         // Read the preferences before creating the view
         initPreferences()
