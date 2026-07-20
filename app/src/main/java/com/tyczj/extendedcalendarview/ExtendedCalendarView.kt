@@ -172,10 +172,15 @@ class ExtendedCalendarView : RelativeLayout, OnItemClickListener, View.OnClickLi
     }
 
     private inner class GestureListener : SimpleOnGestureListener() {
-        override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        override fun onFling(
+            e1: MotionEvent?,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
 
             if (gestureType == LEFT_RIGHT_GESTURE) {
-                if (e1.x - e2.x > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                if (e1?.x?.minus(e2.x)!! > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     nextMonth()
                     return true // Right to left
                 } else if (e2.x - e1.x > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
@@ -183,7 +188,7 @@ class ExtendedCalendarView : RelativeLayout, OnItemClickListener, View.OnClickLi
                     return true // Left to right
                 }
             } else if (gestureType == UP_DOWN_GESTURE) {
-                if (e1.y - e2.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                if (e1?.y?.minus(e2.y)!! > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
                     nextMonth()
                     return true // Bottom to top
                 } else if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {

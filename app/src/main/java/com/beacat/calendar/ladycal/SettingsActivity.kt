@@ -168,7 +168,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                 .unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    private fun onSharedPreferenceChangedImpl(sharedPreferences: SharedPreferences, key: String) {
         if (key == getString(R.string.KEY_THEME)) {
             val color = sharedPreferences.getString(key, getString(R.string.pref_theme_default))
             val dialog = AlertDialog.Builder(this@SettingsActivity).create()
@@ -194,6 +194,15 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
             }
             dialog.setButton(DialogInterface.BUTTON_NEUTRAL, "CONTINUE", null as DialogInterface.OnClickListener?)
             dialog.show()
+        }
+    }
+
+    override fun onSharedPreferenceChanged(
+        p0: SharedPreferences?,
+        p1: String?
+    ) {
+        if (p0 != null && p1 != null) {
+            onSharedPreferenceChangedImpl(p0, p1)
         }
     }
 

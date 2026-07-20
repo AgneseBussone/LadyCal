@@ -108,6 +108,8 @@ public class HistoryActivityJava extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        /* Commented out: this reference-only Java class uses switch/case on non-final R.id
+           values (AGP 8+ android.nonFinalResIds default), which is not a constant expression.
         switch(id) {
             case  R.id.deleteAll:
                 AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivityJava.this).create();
@@ -136,6 +138,7 @@ public class HistoryActivityJava extends AppCompatActivity {
                 onBackPressed();
                 return true;
             }
+        */
         return super.onOptionsItemSelected(item);
     }
 
