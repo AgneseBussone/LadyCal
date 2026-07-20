@@ -1,4 +1,4 @@
-package com.tyczj.extendedcalendarview;
+package com.tyczj.extendedcalendarview.oldjava;
 
 /**
  * Class used to carry the information needed by the medicine chart.

@@ -1,4 +1,4 @@
-package com.tyczj.extendedcalendarview;
+package com.tyczj.extendedcalendarview.oldjava;
 
 import android.content.Context;
 import android.os.Vibrator;
@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beacat.calendar.ladycal.R;
-import com.beacat.calendar.ladycal.UtilityClassJava;
+import com.beacat.calendar.ladycal.oldjava.UtilityClassJava;
 
 import java.util.Calendar;
 import java.util.Locale;

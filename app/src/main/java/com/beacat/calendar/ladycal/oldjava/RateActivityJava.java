@@ -1,4 +1,6 @@
-package com.beacat.calendar.ladycal;
+package com.beacat.calendar.ladycal.oldjava;
+
+import com.beacat.calendar.ladycal.*;
 
 import android.content.ComponentName;
 import android.content.Intent;

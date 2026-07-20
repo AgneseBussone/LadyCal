@@ -1,12 +1,12 @@
-package com.beacat.calendar.ladycal;
+package com.beacat.calendar.ladycal.oldjava;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.tyczj.extendedcalendarview.DayJava;
-import com.tyczj.extendedcalendarview.ExtendedCalendarViewJava;
-import com.tyczj.extendedcalendarview.PeriodJava;
-import com.tyczj.extendedcalendarview.PeriodDatabaseJava;
+import com.tyczj.extendedcalendarview.oldjava.DayJava;
+import com.tyczj.extendedcalendarview.oldjava.ExtendedCalendarViewJava;
+import com.tyczj.extendedcalendarview.oldjava.PeriodJava;
+import com.tyczj.extendedcalendarview.oldjava.PeriodDatabaseJava;
 
 import java.util.Calendar;
 

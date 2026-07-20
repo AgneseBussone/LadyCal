@@ -1,12 +1,14 @@
-package com.beacat.calendar.ladycal;
+package com.beacat.calendar.ladycal.oldjava;
+
+import com.beacat.calendar.ladycal.*;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import androidx.appcompat.app.ActionBar;
 
-import com.tyczj.extendedcalendarview.DayJava;
-import com.tyczj.extendedcalendarview.ExtendedCalendarViewJava;
-import com.tyczj.extendedcalendarview.PeriodDatabaseJava;
+import com.tyczj.extendedcalendarview.oldjava.DayJava;
+import com.tyczj.extendedcalendarview.oldjava.ExtendedCalendarViewJava;
+import com.tyczj.extendedcalendarview.oldjava.PeriodDatabaseJava;
 
 /**
  * Task to update the messages in the main view.

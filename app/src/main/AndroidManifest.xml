@@ -23,7 +23,7 @@
             android:name=".HistoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".StatisticsActivityJava"
+            android:name=".StatisticsActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".BackupActivity"

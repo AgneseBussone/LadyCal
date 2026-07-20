@@ -1,4 +1,4 @@
-package com.beacat.calendar.ladycal;
+package com.beacat.calendar.ladycal.oldjava;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,21 +7,22 @@ import com.tyczj.extendedcalendarview.Period;
 import com.tyczj.extendedcalendarview.PeriodDatabase;
 
 /**
- * Task to be used to delete a period from the db.
+ * Task to be used to update a period from the db.
+ * It takes two Period objects as input: the first that contains the old values and the second with the new values
  */
 
-public class DeletePeriodTaskJava extends AsyncTask<Period, Void, Void> { //params, progress, result
+public class EditPeriodTaskJava extends AsyncTask<Period, Void, Void> { //params, progress, result
 
     private Context context; // needed to insert the new entry into the db
 
-    public DeletePeriodTaskJava(Context context) {
+    public EditPeriodTaskJava(Context context) {
         super();
         this.context = context;
     }
 
     @Override
     protected Void doInBackground(Period... params) {
-        PeriodDatabase.getInstance(context).deletePeriod(params[0]);
+        PeriodDatabase.getInstance(context).updatePeriod(params[0], params[1]);
         return null;
     }
 
