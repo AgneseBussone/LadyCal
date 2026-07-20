@@ -63,7 +63,7 @@ class Reminder : BroadcastReceiver() {
 
             val builder = NotificationCompat.Builder(context, channel)
             builder.setSmallIcon(R.drawable.ic_notification2)
-            builder.color = UtilityClass.getThemeColor(context, R.attr.colorPrimary)
+            builder.color = Utilities.getThemeColor(context, R.attr.colorPrimary)
             builder.setAutoCancel(true)
             val i = Intent(context, SplashActivity::class.java) // intent for opening the app when tap
             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK

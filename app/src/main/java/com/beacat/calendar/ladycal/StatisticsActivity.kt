@@ -1,7 +1,6 @@
 package com.beacat.calendar.ladycal
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -76,7 +75,7 @@ class StatisticsActivity : AppCompatActivity() {
         bar!!.setDisplayHomeAsUpEnabled(true)
 
         val infoTV = findViewById<TextView>(R.id.info)
-        infoTV.setTextColor(UtilityClass.getChartInfoTextColor(this))
+        infoTV.setTextColor(Utilities.getChartInfoTextColor(this))
         infoTV.visibility = View.INVISIBLE
 
         val host = findViewById<TabHost>(R.id.tabHost)
@@ -182,10 +181,10 @@ class StatisticsActivity : AppCompatActivity() {
                 i++
             }
             val dataSet = LineDataSet(entries, "")
-            dataSet.setColors(UtilityClass.getLineChartDataColor(this))
+            dataSet.setColors(Utilities.getLineChartDataColor(this))
             dataSet.valueFormatter = YValueFormatter(false)
-            dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this))
-            dataSet.highLightColor = UtilityClass.getThemeColor(this, R.attr.colorAccent)
+            dataSet.setCircleColor(Utilities.getLineChartCircleColor(this))
+            dataSet.highLightColor = Utilities.getThemeColor(this, R.attr.colorAccent)
             dataSet.circleRadius = 6f
             dataSet.lineWidth = 2f
             dataSet.valueTextSize = 12f
@@ -237,14 +236,14 @@ class StatisticsActivity : AppCompatActivity() {
 
         val yAxis = chart.axisLeft
         val max = LimitLine(35f, "SAFE MAX: 35")
-        max.lineColor = UtilityClass.getLineChartLimitColor(this)
+        max.lineColor = Utilities.getLineChartLimitColor(this)
         max.labelPosition = LimitLine.LimitLabelPosition.LEFT_BOTTOM
         max.lineWidth = 2f
         max.textSize = 9f
         max.textColor = resources.getColor(R.color.chart_limit_text_color)
 
         val min = LimitLine(21f, "SAFE MIN: 21")
-        min.lineColor = UtilityClass.getLineChartLimitColor(this)
+        min.lineColor = Utilities.getLineChartLimitColor(this)
         min.labelPosition = LimitLine.LimitLabelPosition.LEFT_TOP
         min.lineWidth = 2f
         min.textSize = 9f
@@ -270,10 +269,10 @@ class StatisticsActivity : AppCompatActivity() {
 
             if (entries.size > 0) {
                 val dataSet = LineDataSet(entries, "")
-                dataSet.setColors(UtilityClass.getLineChartDataColor(this))
+                dataSet.setColors(Utilities.getLineChartDataColor(this))
                 dataSet.valueFormatter = YValueFormatter(false)
-                dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this))
-                dataSet.highLightColor = UtilityClass.getThemeColor(this, R.attr.colorAccent)
+                dataSet.setCircleColor(Utilities.getLineChartCircleColor(this))
+                dataSet.highLightColor = Utilities.getThemeColor(this, R.attr.colorAccent)
                 dataSet.circleRadius = 6f
                 dataSet.lineWidth = 2f
                 dataSet.valueTextSize = 12f
@@ -330,7 +329,7 @@ class StatisticsActivity : AppCompatActivity() {
 
             val dataSet = BarDataSet(entries, "")
             dataSet.valueFormatter = YValueFormatter(true)
-            dataSet.color = UtilityClass.getThemeColor(this, R.attr.colorAccent)
+            dataSet.color = Utilities.getThemeColor(this, R.attr.colorAccent)
 
             val barData = BarData(dataSet)
 
@@ -352,7 +351,7 @@ class StatisticsActivity : AppCompatActivity() {
             // programmatically create a BarChart
             val chart = BarChart(this)
             chart.setNoDataText(resources.getString(R.string.no_data))
-            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(this))
+            chart.setNoDataTextColor(Utilities.getNoDataTextColor(this))
 
             val xAxis = chart.xAxis
             xAxis.setDrawGridLines(false)
@@ -408,14 +407,14 @@ class StatisticsActivity : AppCompatActivity() {
 
         val yAxis = chart.axisLeft
         val max = LimitLine(7f, "SAFE MAX: 7")
-        max.lineColor = UtilityClass.getLineChartLimitColor(this)
+        max.lineColor = Utilities.getLineChartLimitColor(this)
         max.labelPosition = LimitLine.LimitLabelPosition.LEFT_BOTTOM
         max.lineWidth = 2f
         max.textSize = 9f
         max.textColor = resources.getColor(R.color.chart_limit_text_color)
 
         val min = LimitLine(2f, "SAFE MIN: 2")
-        min.lineColor = UtilityClass.getLineChartLimitColor(this)
+        min.lineColor = Utilities.getLineChartLimitColor(this)
         min.labelPosition = LimitLine.LimitLabelPosition.LEFT_TOP
         min.lineWidth = 2f
         min.textSize = 9f
@@ -448,10 +447,10 @@ class StatisticsActivity : AppCompatActivity() {
 
             if (entries.size > 0) {
                 val dataSet = LineDataSet(entries, "")
-                dataSet.setColors(UtilityClass.getLineChartDataColor(this))
+                dataSet.setColors(Utilities.getLineChartDataColor(this))
                 dataSet.valueFormatter = YValueFormatter(false)
-                dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this))
-                dataSet.highLightColor = UtilityClass.getThemeColor(this, R.attr.colorAccent)
+                dataSet.setCircleColor(Utilities.getLineChartCircleColor(this))
+                dataSet.highLightColor = Utilities.getThemeColor(this, R.attr.colorAccent)
                 dataSet.circleRadius = 6f
                 dataSet.lineWidth = 2f
                 dataSet.valueTextSize = 12f
@@ -483,7 +482,7 @@ class StatisticsActivity : AppCompatActivity() {
             // programmatically create a LineChart
             val chart = LineChart(this)
             chart.setNoDataText(resources.getString(R.string.no_data))
-            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(this))
+            chart.setNoDataTextColor(Utilities.getNoDataTextColor(this))
 
             val xAxis = chart.xAxis
             xAxis.setDrawGridLines(false)

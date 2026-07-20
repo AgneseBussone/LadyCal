@@ -197,10 +197,10 @@ class HistoryActivity : AppCompatActivity() {
             val cal = Calendar.getInstance()
             cal.timeInMillis = item.startDay
             period.text = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(cal.time)
-            period.setTextColor(UtilityClass.getPeriodListPrimaryTextColor(this@HistoryActivity))
+            period.setTextColor(Utilities.getPeriodListPrimaryTextColor(this@HistoryActivity))
             val days = ExtendedCalendarView.getDifferenceInDays(item.endDay, item.startDay) + 1
             length.text = "Length: " + days
-            length.setTextColor(UtilityClass.getPeriodListSecondaryTextColor(this@HistoryActivity))
+            length.setTextColor(Utilities.getPeriodListSecondaryTextColor(this@HistoryActivity))
 
             /* Delete button */
             deleteBtn.setOnClickListener {

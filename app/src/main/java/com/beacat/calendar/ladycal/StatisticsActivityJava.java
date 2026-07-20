@@ -84,7 +84,7 @@ public class StatisticsActivityJava extends AppCompatActivity {
         bar.setDisplayHomeAsUpEnabled(true);
 
         final TextView infoTV = (TextView)findViewById(R.id.info);
-        infoTV.setTextColor(UtilityClass.getChartInfoTextColor(this));
+        infoTV.setTextColor(Utilities.getChartInfoTextColor(this));
         infoTV.setVisibility(View.INVISIBLE);
 
         TabHost host = (TabHost) findViewById(R.id.tabHost);
@@ -195,10 +195,10 @@ public class StatisticsActivityJava extends AppCompatActivity {
                 i++;
             }
             LineDataSet dataSet = new LineDataSet(entries, "");
-            dataSet.setColors(UtilityClass.getLineChartDataColor(this));
+            dataSet.setColors(Utilities.getLineChartDataColor(this));
             dataSet.setValueFormatter(new YValueFormatter(false));
-            dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this));
-            dataSet.setHighLightColor(UtilityClass.getThemeColor(this, R.attr.colorAccent));
+            dataSet.setCircleColor(Utilities.getLineChartCircleColor(this));
+            dataSet.setHighLightColor(Utilities.getThemeColor(this, R.attr.colorAccent));
             dataSet.setCircleRadius(6f);
             dataSet.setLineWidth(2f);
             dataSet.setValueTextSize(12f);
@@ -255,14 +255,14 @@ public class StatisticsActivityJava extends AppCompatActivity {
 
         YAxis yAxis = chart.getAxisLeft();
         LimitLine max = new LimitLine(35, "SAFE MAX: 35");
-        max.setLineColor(UtilityClass.getLineChartLimitColor(this));
+        max.setLineColor(Utilities.getLineChartLimitColor(this));
         max.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_BOTTOM);
         max.setLineWidth(2f);
         max.setTextSize(9f);
         max.setTextColor(getResources().getColor(R.color.chart_limit_text_color));
 
         LimitLine min = new LimitLine(21, "SAFE MIN: 21");
-        min.setLineColor(UtilityClass.getLineChartLimitColor(this));
+        min.setLineColor(Utilities.getLineChartLimitColor(this));
         min.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
         min.setLineWidth(2f);
         min.setTextSize(9f);
@@ -288,10 +288,10 @@ public class StatisticsActivityJava extends AppCompatActivity {
 
             if(entries.size() > 0) {
                 LineDataSet dataSet = new LineDataSet(entries, "");
-                dataSet.setColors(UtilityClass.getLineChartDataColor(this));
+                dataSet.setColors(Utilities.getLineChartDataColor(this));
                 dataSet.setValueFormatter(new YValueFormatter(false));
-                dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this));
-                dataSet.setHighLightColor(UtilityClass.getThemeColor(this, R.attr.colorAccent));
+                dataSet.setCircleColor(Utilities.getLineChartCircleColor(this));
+                dataSet.setHighLightColor(Utilities.getThemeColor(this, R.attr.colorAccent));
                 dataSet.setCircleRadius(6f);
                 dataSet.setLineWidth(2f);
                 dataSet.setValueTextSize(12f);
@@ -349,7 +349,7 @@ public class StatisticsActivityJava extends AppCompatActivity {
 
             BarDataSet dataSet = new BarDataSet(entries, "");
             dataSet.setValueFormatter(new YValueFormatter(true));
-            dataSet.setColor(UtilityClass.getThemeColor(this, R.attr.colorAccent));
+            dataSet.setColor(Utilities.getThemeColor(this, R.attr.colorAccent));
 
             BarData barData = new BarData(dataSet);
 
@@ -371,7 +371,7 @@ public class StatisticsActivityJava extends AppCompatActivity {
             // programmatically create a BarChart
             BarChart chart = new BarChart(this);
             chart.setNoDataText(getResources().getString(R.string.no_data));
-            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(this));
+            chart.setNoDataTextColor(Utilities.getNoDataTextColor(this));
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setDrawGridLines(false);
@@ -428,14 +428,14 @@ public class StatisticsActivityJava extends AppCompatActivity {
 
         YAxis yAxis = chart.getAxisLeft();
         LimitLine max = new LimitLine(7, "SAFE MAX: 7");
-        max.setLineColor(UtilityClass.getLineChartLimitColor(this));
+        max.setLineColor(Utilities.getLineChartLimitColor(this));
         max.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_BOTTOM);
         max.setLineWidth(2f);
         max.setTextSize(9f);
         max.setTextColor(getResources().getColor(R.color.chart_limit_text_color));
 
         LimitLine min = new LimitLine(2, "SAFE MIN: 2");
-        min.setLineColor(UtilityClass.getLineChartLimitColor(this));
+        min.setLineColor(Utilities.getLineChartLimitColor(this));
         min.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
         min.setLineWidth(2f);
         min.setTextSize(9f);
@@ -467,10 +467,10 @@ public class StatisticsActivityJava extends AppCompatActivity {
 
             if(entries.size() > 0) {
                 LineDataSet dataSet = new LineDataSet(entries, "");
-                dataSet.setColors(UtilityClass.getLineChartDataColor(this));
+                dataSet.setColors(Utilities.getLineChartDataColor(this));
                 dataSet.setValueFormatter(new YValueFormatter(false));
-                dataSet.setCircleColor(UtilityClass.getLineChartCircleColor(this));
-                dataSet.setHighLightColor(UtilityClass.getThemeColor(this, R.attr.colorAccent));
+                dataSet.setCircleColor(Utilities.getLineChartCircleColor(this));
+                dataSet.setHighLightColor(Utilities.getThemeColor(this, R.attr.colorAccent));
                 dataSet.setCircleRadius(6f);
                 dataSet.setLineWidth(2f);
                 dataSet.setValueTextSize(12f);
@@ -503,7 +503,7 @@ public class StatisticsActivityJava extends AppCompatActivity {
             // programmatically create a LineChart
             LineChart chart = new LineChart(this);
             chart.setNoDataText(getResources().getString(R.string.no_data));
-            chart.setNoDataTextColor(UtilityClass.getNoDataTextColor(this));
+            chart.setNoDataTextColor(Utilities.getNoDataTextColor(this));
 
             XAxis xAxis = chart.getXAxis();
             xAxis.setDrawGridLines(false);

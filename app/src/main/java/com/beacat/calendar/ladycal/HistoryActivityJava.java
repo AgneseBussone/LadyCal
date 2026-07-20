@@ -230,10 +230,10 @@ public class HistoryActivityJava extends AppCompatActivity {
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(item.getStartDay());
             period.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(cal.getTime()));
-            period.setTextColor(UtilityClass.getPeriodListPrimaryTextColor(HistoryActivityJava.this));
+            period.setTextColor(Utilities.getPeriodListPrimaryTextColor(HistoryActivityJava.this));
             long days = ExtendedCalendarView.getDifferenceInDays(item.getEndDay(), item.getStartDay()) + 1;
             length.setText("Length: " + days);
-            length.setTextColor(UtilityClass.getPeriodListSecondaryTextColor(HistoryActivityJava.this));
+            length.setTextColor(Utilities.getPeriodListSecondaryTextColor(HistoryActivityJava.this));
 
             /* Delete button */
             deleteBtn.setOnClickListener(new View.OnClickListener() {

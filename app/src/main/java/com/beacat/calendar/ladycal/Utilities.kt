@@ -10,7 +10,7 @@ import android.util.TypedValue
  * Utility class used to group operation performed around the app
  */
 
-object UtilityClass {
+object Utilities {
 
     // Get color based on the theme
     @ColorInt

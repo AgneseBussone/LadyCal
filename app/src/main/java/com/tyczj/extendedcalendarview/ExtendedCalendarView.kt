@@ -16,7 +16,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 
 import com.beacat.calendar.ladycal.R
-import com.beacat.calendar.ladycal.UtilityClass
+import com.beacat.calendar.ladycal.Utilities
 
 import java.util.Calendar
 import java.util.Locale
@@ -108,7 +108,7 @@ class ExtendedCalendarView : RelativeLayout, OnItemClickListener, View.OnClickLi
             prev!!.id = prevMonthId
             prev!!.layoutParams = params
             prev!!.setImageResource(R.drawable.navigation_previous_item)
-            if (UtilityClass.isNightModeOn(context)) {
+            if (Utilities.isNightModeOn(context)) {
                 prev!!.setColorFilter(context.resources.getColor(R.color.white))
             }
             prev!!.setOnClickListener(this)
@@ -123,7 +123,7 @@ class ExtendedCalendarView : RelativeLayout, OnItemClickListener, View.OnClickLi
             monthTV!!.setTextAppearance(context, android.R.style.TextAppearance_DeviceDefault_Large)
             monthTV!!.text = calendar!!.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " " + calendar!!.get(Calendar.YEAR)
             monthTV!!.textSize = 25f
-            monthTV!!.setTextColor(UtilityClass.getMonthColor(context))
+            monthTV!!.setTextColor(Utilities.getMonthColor(context))
 
             base!!.addView(monthTV)
 
@@ -134,7 +134,7 @@ class ExtendedCalendarView : RelativeLayout, OnItemClickListener, View.OnClickLi
             params.addRule(CENTER_VERTICAL)
             next = ImageView(context)
             next!!.setImageResource(R.drawable.navigation_next_item)
-            if (UtilityClass.isNightModeOn(context)) {
+            if (Utilities.isNightModeOn(context)) {
                 next!!.setColorFilter(context.resources.getColor(R.color.white))
             }
             next!!.layoutParams = params
