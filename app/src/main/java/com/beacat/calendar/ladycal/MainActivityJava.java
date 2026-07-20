@@ -241,7 +241,7 @@ public class MainActivityJava extends AppCompatActivity {
     private void fireTestNotification() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, 5);
-        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivityJava.this),
+        ReminderJava.scheduleNotification(ReminderJava.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivityJava.this),
                 calendar.getTimeInMillis(),
                 Reminder.NOTIFICATION_CODE_FRIENDLY,
                 MainActivityJava.this);
@@ -438,7 +438,7 @@ public class MainActivityJava extends AppCompatActivity {
                         if(sharedPref.getBoolean(getString(R.string.KEY_PERIOD_REM), false)){
                             // cal is set to the end of the period
                             if(Calendar.getInstance().getTimeInMillis() < cal.getTimeInMillis()){
-                                Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_END, MainActivityJava.this),
+                                ReminderJava.scheduleNotification(ReminderJava.getNotification(Reminder.NOTIFICATION_CODE_END, MainActivityJava.this),
                                         cal.getTimeInMillis(),
                                         Reminder.NOTIFICATION_CODE_END,
                                         MainActivityJava.this);
@@ -554,7 +554,7 @@ public class MainActivityJava extends AppCompatActivity {
                 c.add(Calendar.DATE, (db.getCycleLength() - 3)); // friendly reminder date
                 if (now <= c.getTimeInMillis() && friendlyRem) {
                     long date = c.getTimeInMillis();
-                    Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivityJava.this),
+                    ReminderJava.scheduleNotification(ReminderJava.getNotification(Reminder.NOTIFICATION_CODE_FRIENDLY, MainActivityJava.this),
                             date,
                             Reminder.NOTIFICATION_CODE_FRIENDLY,
                             MainActivityJava.this);
@@ -567,7 +567,7 @@ public class MainActivityJava extends AppCompatActivity {
                     c.add(Calendar.DATE, 3); // start period reminder date
                     if(now <= c.getTimeInMillis()) {
                         long date = c.getTimeInMillis();
-                        Reminder.scheduleNotification(Reminder.getNotification(Reminder.NOTIFICATION_CODE_START, MainActivityJava.this),
+                        ReminderJava.scheduleNotification(ReminderJava.getNotification(Reminder.NOTIFICATION_CODE_START, MainActivityJava.this),
                                 date,
                                 Reminder.NOTIFICATION_CODE_START,
                                 MainActivityJava.this);
