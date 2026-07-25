@@ -12,7 +12,24 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 
+import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +39,8 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.TextView
 import android.widget.Toast
+import com.beacat.calendar.ladycal.mainscreen.MainView
+import com.github.mikephil.charting.BuildConfig
 
 import com.tyczj.extendedcalendarview.Day
 import com.tyczj.extendedcalendarview.ExtendedCalendarView
@@ -67,15 +86,26 @@ class MainActivity : AppCompatActivity() {
         // set the theme
         setTheme(themeId)
 
-        // Create the view and all the objects in it
-        setContentView(R.layout.activity_main)
-        calendar = findViewById(R.id.calendar)
+        // Create the calendar view eagerly so it is available (non-null) in onResume
+        calendar = ExtendedCalendarView(this).apply {
+            setOnDayClickListener(object : ExtendedCalendarView.OnDayClickListener {
+                override fun onDayClicked(day: Day?) {
+                    selectedDay = day
+                }
+            })
+        }
 
-        calendar!!.setOnDayClickListener(object : ExtendedCalendarView.OnDayClickListener {
-            override fun onDayClicked(day: Day?) {
-                selectedDay = day
+        // Create the view and all the objects in it
+        setContent {
+            MaterialTheme {
+                MainView (
+                    calendarView = calendar!!,
+                    onResetToday = { resetDateToday() },
+                    onStartPeriod = { startPeriod() },
+                    onAddMed = { addMed() }
+                )
             }
-        })
+        }
 
         bar = supportActionBar
 
@@ -223,7 +253,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun resetDateToday(view: View) {
+    fun resetDateToday() {
         calendar!!.resetDate()
     }
 
@@ -322,7 +352,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun startPeriod(view: View) {
+    fun startPeriod() {
         if (selectedDay != null) {
             val cal = Calendar.getInstance()
             cal.timeInMillis = selectedDay!!.dayUTC
@@ -434,7 +464,7 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    fun addMed(view: View) {
+    fun addMed() {
         val dialogBuilder = AlertDialog.Builder(this)
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.add_meds_dialog, null)
