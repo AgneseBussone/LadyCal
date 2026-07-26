@@ -14,9 +14,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +50,7 @@ fun CalendarView(adjacentMonths: Long = 500) {
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(adjacentMonths) }
     val endMonth = remember { currentMonth.plusMonths(adjacentMonths) }
-    val selections = remember { mutableStateListOf<CalendarDay>() }
+    var selection by remember { mutableStateOf<CalendarDay?>(null) }
     val daysOfWeek = remember { daysOfWeek() }
     val localScaffoldPaddingValues = compositionLocalOf { PaddingValues() }
 
@@ -85,12 +86,8 @@ fun CalendarView(adjacentMonths: Long = 500) {
             modifier = Modifier.testTag("Calendar"),
             state = state,
             dayContent = { day ->
-                Day(day, isSelected = selections.contains(day)) { clicked ->
-                    if (selections.contains(clicked)) {
-                        selections.remove(clicked)
-                    } else {
-                        selections.add(clicked)
-                    }
+                Day(day, isSelected = selection == day) { clicked ->
+                    selection = if (selection == clicked) null else clicked
                 }
             },
             monthHeader = {
