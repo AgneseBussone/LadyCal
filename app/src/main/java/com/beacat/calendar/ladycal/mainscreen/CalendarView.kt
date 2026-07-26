@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -22,11 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.beacat.calendar.ladycal.R
 import com.beacat.calendar.ladycal.displayText
 import com.beacat.calendar.ladycal.rememberFirstMostVisibleMonth
 import com.kizitonwose.calendar.compose.HorizontalCalendar
@@ -124,11 +127,10 @@ private fun Day(day: CalendarDay, isSelected: Boolean, onClick: (CalendarDay) ->
             .testTag("MonthDay")
             .padding(6.dp)
             .clip(CircleShape)
-            .background(color = if (isSelected) Color.Red else Color.Transparent)
+            .background(color = if (isSelected) colorResource(R.color.day_selected_bg) else Color.Transparent)
             // Disable clicks on inDates/outDates
             .clickable(
                 enabled = day.position == DayPosition.MonthDate,
-//                showRipple = !isSelected,
                 onClick = { onClick(day) },
             ),
         contentAlignment = Alignment.Center,
@@ -136,7 +138,7 @@ private fun Day(day: CalendarDay, isSelected: Boolean, onClick: (CalendarDay) ->
         val textColor = when (day.position) {
             // Color.Unspecified will use the default text color from the current theme
             DayPosition.MonthDate -> if (isSelected) Color.White else Color.Unspecified
-            DayPosition.InDate, DayPosition.OutDate -> Color.Blue
+            DayPosition.InDate, DayPosition.OutDate -> Color.Transparent
         }
         Text(
             text = day.date.dayOfMonth.toString(),
