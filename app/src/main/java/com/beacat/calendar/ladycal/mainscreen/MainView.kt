@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.beacat.calendar.ladycal.R
 import com.beacat.calendar.ladycal.Utilities
 import com.tyczj.extendedcalendarview.ExtendedCalendarView
@@ -26,8 +27,10 @@ fun MainView(
     calendarView: ExtendedCalendarView,
     onResetToday: () -> Unit,
     onStartPeriod: () -> Unit,
-    onAddMed: () -> Unit
+    onAddMed: () -> Unit,
 ) {
+    val viewModel: MainViewModel = hiltViewModel()
+
     val context = LocalContext.current
     val fabColor = Color(Utilities.getThemeColor(context, R.attr.colorAccent))
 
