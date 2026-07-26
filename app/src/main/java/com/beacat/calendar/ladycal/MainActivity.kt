@@ -98,12 +98,7 @@ class MainActivity : AppCompatActivity() {
         // Create the view and all the objects in it
         setContent {
             MaterialTheme {
-                MainView (
-                    calendarView = calendar!!,
-                    onResetToday = { resetDateToday() },
-                    onStartPeriod = { startPeriod() },
-                    onAddMed = { addMed() }
-                )
+                MainView ()
             }
         }
 

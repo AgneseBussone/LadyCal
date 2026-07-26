@@ -23,14 +23,28 @@ import com.beacat.calendar.ladycal.Utilities
 import com.tyczj.extendedcalendarview.ExtendedCalendarView
 
 @Composable
-fun MainView(
-    calendarView: ExtendedCalendarView,
+fun MainView() {
+    val viewModel: MainViewModel = hiltViewModel()
+
+    MainViewContent(
+        onResetToday = {
+            // reset calendar to today
+        },
+        onStartPeriod = {
+            // start the period
+        },
+        onAddMed = {
+            // add medication
+        }
+    )
+}
+
+@Composable
+private fun MainViewContent(
     onResetToday: () -> Unit,
     onStartPeriod: () -> Unit,
     onAddMed: () -> Unit,
 ) {
-    val viewModel: MainViewModel = hiltViewModel()
-
     val context = LocalContext.current
     val fabColor = Color(Utilities.getThemeColor(context, R.attr.colorAccent))
 
@@ -38,12 +52,7 @@ fun MainView(
         .fillMaxSize()
         .padding(5.dp)) {
 
-        AndroidView(
-            factory = { calendarView },
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxWidth()
-        )
+        CalendarView()
 
         FloatingActionButton(
             onClick = onResetToday,
@@ -95,15 +104,12 @@ fun MainView(
     }
 }
 
-//@Preview
-//@Composable
-//private fun MainViewPreview() {
-//    MaterialTheme {
-//        MainView(
-//            calendarView = ExtendedCalendarView(),
-//            onResetToday = {},
-//            onStartPeriod = {},
-//            onAddMed = {}
-//        )
-//    }
-//}
+@Preview
+@Composable
+private fun Preview() {
+    MainViewContent(
+        onResetToday = {},
+        onStartPeriod = {},
+        onAddMed = {}
+    )
+}
