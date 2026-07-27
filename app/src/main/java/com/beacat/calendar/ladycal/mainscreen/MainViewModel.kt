@@ -11,4 +11,16 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val periodLength: Int get() = db.periodLength
+
+    public fun resetCalendarToToday(){
+
+    }
+
+    public fun startPeriod() {
+
+    }
+
+    public fun addMedication() {
+
+    }
 }

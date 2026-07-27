@@ -27,15 +27,9 @@ fun MainView() {
     val viewModel: MainViewModel = hiltViewModel()
 
     MainViewContent(
-        onResetToday = {
-            // reset calendar to today
-        },
-        onStartPeriod = {
-            // start the period
-        },
-        onAddMed = {
-            // add medication
-        }
+        onResetToday = viewModel::resetCalendarToToday,
+        onStartPeriod = viewModel::startPeriod,
+        onAddMed = viewModel::addMedication
     )
 }
 
