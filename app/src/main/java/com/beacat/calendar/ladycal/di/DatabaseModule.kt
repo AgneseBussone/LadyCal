@@ -1,6 +1,9 @@
 package com.beacat.calendar.ladycal.di
 
 import android.content.Context
+import androidx.room.Room
+import com.beacat.calendar.ladycal.database.AppDatabase
+import com.beacat.calendar.ladycal.database.PeriodDao
 import com.tyczj.extendedcalendarview.PeriodDatabase
 import dagger.Module
 import dagger.Provides
@@ -17,4 +20,12 @@ object DatabaseModule {
     @Singleton
     fun providePeriodDatabase(@ApplicationContext context: Context): PeriodDatabase =
         PeriodDatabase.getInstance(context)
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
+        Room.databaseBuilder(context, AppDatabase::class.java, "ladycal.db").build()
+
+    @Provides
+    fun providePeriodDao(db: AppDatabase): PeriodDao = db.periodDao()
 }
