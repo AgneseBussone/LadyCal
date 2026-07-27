@@ -49,7 +49,10 @@ import java.time.YearMonth
 
 
 @Composable
-fun CalendarView(adjacentMonths: Long = 500) {
+fun CalendarView(
+    adjacentMonths: Long = 500,
+    onSelectedDateChange: (LocalDate?) -> Unit = {},
+) {
     val today = remember { LocalDate.now() }
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(adjacentMonths) }
@@ -92,6 +95,7 @@ fun CalendarView(adjacentMonths: Long = 500) {
             dayContent = { day ->
                 Day(day, today, isSelected = selection == day) { clicked ->
                     selection = if (selection == clicked) null else clicked
+                    onSelectedDateChange(selection?.date)
                 }
             },
             monthHeader = {

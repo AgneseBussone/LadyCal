@@ -9,6 +9,10 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +24,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.beacat.calendar.ladycal.R
 import com.beacat.calendar.ladycal.Utilities
-import com.tyczj.extendedcalendarview.ExtendedCalendarView
+import java.time.LocalDate
 
 @Composable
 fun MainView() {
@@ -36,17 +40,20 @@ fun MainView() {
 @Composable
 private fun MainViewContent(
     onResetToday: () -> Unit,
-    onStartPeriod: () -> Unit,
+    onStartPeriod: (LocalDate?) -> Unit,
     onAddMed: () -> Unit,
 ) {
     val context = LocalContext.current
     val fabColor = Color(Utilities.getThemeColor(context, R.attr.colorAccent))
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
 
     Box(modifier = Modifier
         .fillMaxSize()
         .padding(5.dp)) {
 
-        CalendarView()
+        CalendarView(
+            onSelectedDateChange = { selectedDate = it }
+        )
 
         FloatingActionButton(
             onClick = onResetToday,
@@ -65,7 +72,7 @@ private fun MainViewContent(
         }
 
         FloatingActionButton(
-            onClick = onStartPeriod,
+            onClick = { onStartPeriod(selectedDate) },
             backgroundColor = fabColor,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
