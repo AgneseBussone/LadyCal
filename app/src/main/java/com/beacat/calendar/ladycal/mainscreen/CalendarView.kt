@@ -45,18 +45,16 @@ import com.kizitonwose.calendar.core.previousMonth
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.YearMonth
 
 
 @Composable
 fun CalendarView(
+    uiState: MainViewUIState,
     adjacentMonths: Long = 500,
     onSelectedDateChange: (LocalDate?) -> Unit = {},
 ) {
-    val today = remember { LocalDate.now() }
-    val currentMonth = remember { YearMonth.now() }
-    val startMonth = remember { currentMonth.minusMonths(adjacentMonths) }
-    val endMonth = remember { currentMonth.plusMonths(adjacentMonths) }
+    val startMonth = remember { uiState.currentMonth.minusMonths(adjacentMonths) }
+    val endMonth = remember { uiState.currentMonth.plusMonths(adjacentMonths) }
     var selection by remember { mutableStateOf<CalendarDay?>(null) }
     val daysOfWeek = remember { daysOfWeek() }
     val localScaffoldPaddingValues = compositionLocalOf { PaddingValues() }
@@ -67,33 +65,39 @@ fun CalendarView(
             .background(Color.White)
             .padding(localScaffoldPaddingValues.current),
     ) {
-        val state = rememberCalendarState(
+        val calendarState = rememberCalendarState(
             startMonth = startMonth,
             endMonth = endMonth,
-            firstVisibleMonth = currentMonth,
+            firstVisibleMonth = uiState.currentMonth,
             firstDayOfWeek = daysOfWeek.first(),
         )
         val coroutineScope = rememberCoroutineScope()
-        val visibleMonth = rememberFirstMostVisibleMonth(state, viewportPercent = 90f)
+        val visibleMonth = rememberFirstMostVisibleMonth(calendarState, viewportPercent = 90f)
         SimpleCalendarTitle(
             modifier = Modifier.padding(vertical = 10.dp, horizontal = 8.dp),
             currentMonth = visibleMonth.yearMonth,
             goToPrevious = {
                 coroutineScope.launch {
-                    state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.previousMonth)
+                    calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.previousMonth)
                 }
             },
             goToNext = {
                 coroutineScope.launch {
-                    state.animateScrollToMonth(state.firstVisibleMonth.yearMonth.nextMonth)
+                    calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.nextMonth)
                 }
             },
         )
         HorizontalCalendar(
             modifier = Modifier.testTag("Calendar"),
-            state = state,
+            state = calendarState,
             dayContent = { day ->
-                Day(day, today, isSelected = selection == day) { clicked ->
+                Day(
+                    day,
+                    uiState.today,
+                    isSelected = selection == day,
+                    isPeriod = uiState.periodDays.contains(day.date),
+                    isEstimated = uiState.estimatedDays.contains(day.date),
+                ) { clicked ->
                     selection = if (selection == clicked) null else clicked
                     onSelectedDateChange(selection?.date)
                 }
@@ -129,11 +133,14 @@ private fun Day(
     day: CalendarDay,
     today: LocalDate,
     isSelected: Boolean,
+    isPeriod: Boolean,
+    isEstimated: Boolean,
     onClick: (CalendarDay) -> Unit
 ) {
     val context = LocalContext.current
     val bgColor = when {
         isSelected -> colorResource(R.color.day_selected_bg)
+        isPeriod || isEstimated -> Color(Utilities.getThemeColor(context, R.attr.colorPrimary))
         day.date == today -> Color(Utilities.getThemeColor(context, R.attr.colorAccent))
         else -> Color.Transparent
     }
@@ -168,5 +175,7 @@ private fun Day(
 @Preview
 @Composable
 private fun Preview() {
-    CalendarView()
+    CalendarView(
+        uiState = MainViewUIState()
+    )
 }
