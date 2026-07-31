@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,35 +61,37 @@ fun CalendarView(
     val daysOfWeek = remember { daysOfWeek() }
     val localScaffoldPaddingValues = compositionLocalOf { PaddingValues() }
 
+    val calendarState = rememberCalendarState(
+        startMonth = startMonth,
+        endMonth = endMonth,
+        firstVisibleMonth = uiState.currentMonth,
+        firstDayOfWeek = daysOfWeek.first(),
+    )
+    val visibleMonth = rememberFirstMostVisibleMonth(calendarState, viewportPercent = 90f)
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(visibleMonth) {
+        onMonthChanged(visibleMonth.yearMonth)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
             .padding(localScaffoldPaddingValues.current),
     ) {
-        val calendarState = rememberCalendarState(
-            startMonth = startMonth,
-            endMonth = endMonth,
-            firstVisibleMonth = uiState.currentMonth,
-            firstDayOfWeek = daysOfWeek.first(),
-        )
-        val coroutineScope = rememberCoroutineScope()
-        val visibleMonth = rememberFirstMostVisibleMonth(calendarState, viewportPercent = 90f)
+
         SimpleCalendarTitle(
             modifier = Modifier.padding(vertical = 10.dp, horizontal = 8.dp),
             currentMonth = visibleMonth.yearMonth,
             goToPrevious = {
                 coroutineScope.launch {
-                    val month = calendarState.firstVisibleMonth.yearMonth.previousMonth
-                    onMonthChanged(month)
-                    calendarState.animateScrollToMonth(month)
+                    calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.previousMonth)
                 }
             },
             goToNext = {
                 coroutineScope.launch {
-                    val month = calendarState.firstVisibleMonth.yearMonth.nextMonth
-                    onMonthChanged(month)
-                    calendarState.animateScrollToMonth(month)
+                    calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.nextMonth)
                 }
             },
         )

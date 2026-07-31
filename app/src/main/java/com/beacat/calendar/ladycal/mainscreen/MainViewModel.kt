@@ -46,8 +46,15 @@ class MainViewModel @Inject constructor(
         onSelectedDateChanged(null)
     }
 
-    public fun resetCalendarToToday(){
-
+    fun resetCalendarToToday() {
+        val now = YearMonth.now()
+        _uiState.update {
+            it.copy(
+                currentMonth = now,
+                selectedDate = null,
+            )
+        }
+        loadMonth(now)
     }
 
     fun startPeriod(selectedDay: LocalDate?) {
@@ -86,5 +93,5 @@ data class MainViewUIState(
     val selectedDate: LocalDate? = null,
     val currentMonth: YearMonth = YearMonth.now(),
     val periodDays: List<LocalDate> = listOf(),
-    val estimatedDays: List<LocalDate> = listOf()
+    val estimatedDays: List<LocalDate> = listOf(),
 )
