@@ -42,9 +42,9 @@ fun MainView() {
 @Composable
 private fun MainViewContent(
     uiState: MainViewUIState,
-    onResetToday: () -> Unit,
-    onStartPeriod: (LocalDate?) -> Unit,
-    onAddMed: () -> Unit,
+    onResetToday: () -> Unit = {},
+    onStartPeriod: (LocalDate?) -> Unit = {},
+    onAddMed: () -> Unit = {},
     onMonthChanged: (YearMonth) -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -115,9 +115,6 @@ private fun MainViewContent(
 @Composable
 private fun Preview() {
     MainViewContent(
-        uiState = MainViewUIState(),
-        onResetToday = {},
-        onStartPeriod = {},
-        onAddMed = {},
+        uiState = MainViewUIState()
     )
 }
