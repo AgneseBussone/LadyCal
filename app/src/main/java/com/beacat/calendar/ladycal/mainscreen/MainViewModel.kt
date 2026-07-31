@@ -36,6 +36,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun onMonthChanged(newMonth: YearMonth) {
+        _uiState.update { it.copy(currentMonth = newMonth) }
+        loadMonth(newMonth)
+    }
+
     public fun resetCalendarToToday(){
 
     }

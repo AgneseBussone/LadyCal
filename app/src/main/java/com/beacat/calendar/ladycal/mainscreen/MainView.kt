@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.beacat.calendar.ladycal.R
 import com.beacat.calendar.ladycal.Utilities
 import java.time.LocalDate
+import java.time.YearMonth
 
 @Composable
 fun MainView() {
@@ -33,7 +34,8 @@ fun MainView() {
         uiState = state,
         onResetToday = viewModel::resetCalendarToToday,
         onStartPeriod = viewModel::startPeriod,
-        onAddMed = viewModel::addMedication
+        onAddMed = viewModel::addMedication,
+        onMonthChanged = viewModel::onMonthChanged
     )
 }
 
@@ -43,6 +45,7 @@ private fun MainViewContent(
     onResetToday: () -> Unit,
     onStartPeriod: (LocalDate?) -> Unit,
     onAddMed: () -> Unit,
+    onMonthChanged: (YearMonth) -> Unit = {}
 ) {
     val context = LocalContext.current
     val fabColor = Color(Utilities.getThemeColor(context, R.attr.colorAccent))
@@ -54,7 +57,8 @@ private fun MainViewContent(
 
         CalendarView(
             uiState = uiState,
-            onSelectedDateChange = { selectedDate = it }
+            onSelectedDateChange = { selectedDate = it },
+            onMonthChanged = onMonthChanged
         )
 
         FloatingActionButton(

@@ -45,6 +45,7 @@ import com.kizitonwose.calendar.core.previousMonth
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
 
 
 @Composable
@@ -52,6 +53,7 @@ fun CalendarView(
     uiState: MainViewUIState,
     adjacentMonths: Long = 500,
     onSelectedDateChange: (LocalDate?) -> Unit = {},
+    onMonthChanged: (YearMonth) -> Unit = {}
 ) {
     val startMonth = remember { uiState.currentMonth.minusMonths(adjacentMonths) }
     val endMonth = remember { uiState.currentMonth.plusMonths(adjacentMonths) }
@@ -78,12 +80,16 @@ fun CalendarView(
             currentMonth = visibleMonth.yearMonth,
             goToPrevious = {
                 coroutineScope.launch {
-                    calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.previousMonth)
+                    val month = calendarState.firstVisibleMonth.yearMonth.previousMonth
+                    onMonthChanged(month)
+                    calendarState.animateScrollToMonth(month)
                 }
             },
             goToNext = {
                 coroutineScope.launch {
-                    calendarState.animateScrollToMonth(calendarState.firstVisibleMonth.yearMonth.nextMonth)
+                    val month = calendarState.firstVisibleMonth.yearMonth.nextMonth
+                    onMonthChanged(month)
+                    calendarState.animateScrollToMonth(month)
                 }
             },
         )
@@ -138,11 +144,15 @@ private fun Day(
     onClick: (CalendarDay) -> Unit
 ) {
     val context = LocalContext.current
-    val bgColor = when {
-        isSelected -> colorResource(R.color.day_selected_bg)
-        isPeriod || isEstimated -> Color(Utilities.getThemeColor(context, R.attr.colorPrimary))
-        day.date == today -> Color(Utilities.getThemeColor(context, R.attr.colorAccent))
-        else -> Color.Transparent
+    val bgColor = if (day.position == DayPosition.MonthDate) {
+        when {
+            isSelected -> colorResource(R.color.day_selected_bg)
+            isPeriod || isEstimated -> Color(Utilities.getThemeColor(context, R.attr.colorPrimary))
+            day.date == today -> Color(Utilities.getThemeColor(context, R.attr.colorAccent))
+            else -> Color.Transparent
+        }
+    } else {
+        Color.Transparent
     }
 
     Box(
@@ -161,7 +171,7 @@ private fun Day(
     ) {
         val textColor = when (day.position) {
             // Color.Unspecified will use the default text color from the current theme
-            DayPosition.MonthDate -> if (isSelected) Color.White else Color.Unspecified
+            DayPosition.MonthDate -> if (isSelected || isPeriod) Color.White else Color.Unspecified
             DayPosition.InDate, DayPosition.OutDate -> Color.Transparent
         }
         Text(
