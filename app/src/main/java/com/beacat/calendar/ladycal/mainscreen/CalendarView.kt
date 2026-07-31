@@ -52,12 +52,11 @@ import java.time.YearMonth
 fun CalendarView(
     uiState: MainViewUIState,
     adjacentMonths: Long = 500,
-    onSelectedDateChange: (LocalDate?) -> Unit = {},
+    onSelectedDateChange: (LocalDate) -> Unit = {},
     onMonthChanged: (YearMonth) -> Unit = {}
 ) {
     val startMonth = remember { uiState.currentMonth.minusMonths(adjacentMonths) }
     val endMonth = remember { uiState.currentMonth.plusMonths(adjacentMonths) }
-    var selection by remember { mutableStateOf<CalendarDay?>(null) }
     val daysOfWeek = remember { daysOfWeek() }
     val localScaffoldPaddingValues = compositionLocalOf { PaddingValues() }
 
@@ -100,12 +99,11 @@ fun CalendarView(
                 Day(
                     day,
                     uiState.today,
-                    isSelected = selection == day,
+                    isSelected = uiState.selectedDate == day.date,
                     isPeriod = uiState.periodDays.contains(day.date),
                     isEstimated = uiState.estimatedDays.contains(day.date),
                 ) { clicked ->
-                    selection = if (selection == clicked) null else clicked
-                    onSelectedDateChange(selection?.date)
+                    onSelectedDateChange(clicked.date)
                 }
             },
             monthHeader = {

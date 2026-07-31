@@ -36,9 +36,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun onSelectedDateChanged(date: LocalDate?) {
+        _uiState.update { it.copy(selectedDate = date) }
+    }
+
     fun onMonthChanged(newMonth: YearMonth) {
         _uiState.update { it.copy(currentMonth = newMonth) }
         loadMonth(newMonth)
+        onSelectedDateChanged(null)
     }
 
     public fun resetCalendarToToday(){
@@ -51,11 +56,13 @@ class MainViewModel @Inject constructor(
         val start = day.atStartOfDay(zone).toInstant().toEpochMilli()
 
         // todo: use fix length or average from past cycles
-        val end = day.plusDays(7).atTime(23, 59).atZone(zone).toInstant().toEpochMilli()
+        val end = day.plusDays(6).atTime(23, 59).atZone(zone).toInstant().toEpochMilli()
         viewModelScope.launch {
             repository.addPeriod(
                 Period(startDayTimestamp = start, endDayTimestamp = end),
             )
+            loadMonth(uiState.value.currentMonth)
+            onSelectedDateChanged(null)
         }
     }
 
@@ -76,6 +83,7 @@ private fun Period.daysInMonth(month: YearMonth): List<LocalDate> {
 
 data class MainViewUIState(
     val today: LocalDate = LocalDate.now(),
+    val selectedDate: LocalDate? = null,
     val currentMonth: YearMonth = YearMonth.now(),
     val periodDays: List<LocalDate> = listOf(),
     val estimatedDays: List<LocalDate> = listOf()

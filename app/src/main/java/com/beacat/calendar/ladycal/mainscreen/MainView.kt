@@ -35,7 +35,8 @@ fun MainView() {
         onResetToday = viewModel::resetCalendarToToday,
         onStartPeriod = viewModel::startPeriod,
         onAddMed = viewModel::addMedication,
-        onMonthChanged = viewModel::onMonthChanged
+        onMonthChanged = viewModel::onMonthChanged,
+        onSelectedDateChange = viewModel::onSelectedDateChanged
     )
 }
 
@@ -45,11 +46,11 @@ private fun MainViewContent(
     onResetToday: () -> Unit = {},
     onStartPeriod: (LocalDate?) -> Unit = {},
     onAddMed: () -> Unit = {},
-    onMonthChanged: (YearMonth) -> Unit = {}
+    onMonthChanged: (YearMonth) -> Unit = {},
+    onSelectedDateChange: (LocalDate) -> Unit = {},
 ) {
     val context = LocalContext.current
     val fabColor = Color(Utilities.getThemeColor(context, R.attr.colorAccent))
-    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -57,7 +58,7 @@ private fun MainViewContent(
 
         CalendarView(
             uiState = uiState,
-            onSelectedDateChange = { selectedDate = it },
+            onSelectedDateChange = onSelectedDateChange,
             onMonthChanged = onMonthChanged
         )
 
@@ -78,7 +79,7 @@ private fun MainViewContent(
         }
 
         FloatingActionButton(
-            onClick = { onStartPeriod(selectedDate) },
+            onClick = { onStartPeriod(uiState.selectedDate) },
             backgroundColor = fabColor,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
